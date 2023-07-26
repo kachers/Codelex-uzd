@@ -1,21 +1,18 @@
-﻿using System;
-
-namespace Exercise8
+﻿namespace Exercise8
 {
     internal class Program
     {
         static void Main(string[] args)
         {
             Console.WriteLine("ievadi minutes");
-            var minutes = int.Parse(Console.ReadLine());
+            int minutes = int.Parse(Console.ReadLine());
+            int minutesInYear = 365 * 24 * 60;
+            int miutesInDay = 24 * 60;
 
-            var minutesInYear = 365 * 24 * 60;
-            var miutesInDay = 24 * 60;
+            int years = minutes / minutesInYear;
+            int minutesToDays = minutes % minutesInYear;
+            int days = minutesToDays / miutesInDay;
 
-            var years = minutes / minutesInYear;
-            var minutesToDays = minutes % minutesInYear;
-            var days = minutesToDays / miutesInDay;
-            
             Console.WriteLine($"it's {years} years and {days} days");
 
             Console.ReadKey();
