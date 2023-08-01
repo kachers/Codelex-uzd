@@ -8,13 +8,13 @@ namespace PositiveNegativeNumber
         {
             Console.WriteLine("Enter the number.");
             var input = Console.ReadKey();
-            /*
-            fixme
-            if (?)
+            var number = int.Parse(input.KeyChar.ToString());
+           
+            if (number>0)
             {
                 Console.WriteLine("Number is positive");
             } 
-            else if (?) 
+            else if (number<0) 
             {
                 Console.WriteLine("Number is negative");
             } 
@@ -22,7 +22,7 @@ namespace PositiveNegativeNumber
             {
                 Console.WriteLine("Number is zero");
             }
-            */
+            
         }
     }
 }
