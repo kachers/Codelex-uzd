@@ -26,7 +26,6 @@ internal class Program
         Console.WriteLine("0. Calculate some numbers");
         Console.WriteLine("1. Quit\n");
         Console.WriteLine("Enter your choice (0-1) : ");
-        //var keyboard = Console.ReadKey();
         int userChoice;
         while (!int.TryParse(Console.ReadKey().KeyChar.ToString(), out userChoice) || userChoice < 0 || userChoice > 1)
             Console.WriteLine("\nInvalid input. Please choose a valid action (0 to 1):");
