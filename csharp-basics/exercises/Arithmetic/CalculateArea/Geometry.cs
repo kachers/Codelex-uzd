@@ -1,26 +1,24 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace CalculateArea
+namespace CalculateArea;
+
+public class Geometry
 {
-    public class Geometry
+    public static double AreaOfCircle(decimal radius)
     {
-        public static double AreaOfCircle(decimal radius)
-        {
-            throw new NotImplementedException();
-        }
+        if (radius < 0) Console.WriteLine("error - radius must be positive number");
+        return Math.PI * (double)radius * 2;
+    }
 
-        public static double AreaOfRectangle(decimal length, decimal width)
-        {
-            throw new NotImplementedException();
-        }
+    public static double AreaOfRectangle(decimal length, decimal width)
+    {
+        if (length < 0 || width < 0) Console.WriteLine("error - length and width must be positive numbers");
+        return (double)length * (double)width;
+    }
 
-        public static double AreaOfTriangle(decimal ground, decimal h)
-        {
-            throw new NotImplementedException();
-        }
+    public static double AreaOfTriangle(decimal ground, decimal height)
+    {
+        if (ground < 0 || height < 0) Console.WriteLine("error - ground must height positive numbers");
+        return (double)ground * (double)height * 0.5;
     }
 }

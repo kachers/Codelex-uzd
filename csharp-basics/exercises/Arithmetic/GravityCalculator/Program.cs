@@ -1,18 +1,18 @@
 ﻿using System;
 
-namespace GravityCalculator
+namespace GravityCalculator;
+
+internal class Program
 {
-    class Program
+    private static void Main(string[] args)
     {
-        static void Main(string[] args)
-        {
-            double gravity = -9.81;  // Earth's gravity in m/s^2
-            double initialVelocity = 0.0;
-            double fallingTime = 10.0;
-            double initialPosition = 0.0;
-            double finalPosition = 0.0;
-            Console.WriteLine("The object's position after " + fallingTime + " seconds is " + finalPosition + " m.");
-            Console.ReadKey();
-        }
+        var gravity = -9.81; // Earth's gravity in m/s^2
+        var initialVelocity = 0.0;
+        var fallingTime = 10.0;
+        var initialPosition = 0.0;
+        var finalPosition = 0.5 * gravity * Math.Pow(fallingTime, 2) + initialVelocity * fallingTime + initialPosition;
+
+        Console.WriteLine("The object's position after " + fallingTime + " seconds is " + finalPosition + " m.");
+        Console.ReadKey();
     }
 }
