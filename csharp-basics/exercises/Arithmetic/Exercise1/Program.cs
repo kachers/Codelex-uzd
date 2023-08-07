@@ -11,6 +11,7 @@ internal class Program
     {
         if (a == 15 || b == 15 || a + b == 15 || a - b == 15)
             return true;
+
         return false;
     }
 }
