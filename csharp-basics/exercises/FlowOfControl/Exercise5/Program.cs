@@ -14,6 +14,7 @@ internal class Program
         var input = Console.ReadLine().ToLower().ToCharArray();
         var result = "";
         foreach (var c in input)
+        {
             switch (c)
             {
                 case 'a':
@@ -107,6 +108,7 @@ internal class Program
                     result = string.Concat(result, "* ");
                     break;
             }
+        }
 
         return result;
     }
