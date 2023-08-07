@@ -34,16 +34,34 @@ internal class Program
         Console.WriteLine("4. Quit\n");
         Console.WriteLine("Enter your choice (1-4) : ");
         var keyboard = Console.ReadKey();
-        var userChoice = int.Parse(keyboard.KeyChar.ToString());
+        var userChoice = 0;
+
+
+        if (!char.IsDigit(keyboard.KeyChar) || keyboard.KeyChar <= 4)
+        {
+            Console.WriteLine("\nInvalid input. Please enter a valid integer.");
+            GetMenu();
+        }
+        else
+        {
+            userChoice = int.Parse(keyboard.KeyChar.ToString());
+        }
 
         return userChoice;
     }
 
     public static void CalculateCircleArea()
     {
-        Console.WriteLine("What is the circle's radius? ");
+        decimal radius;
+        while (true)
+        {
+            Console.WriteLine("\nWhat is the circle's radius? ");
+            var input = Console.ReadLine();
 
-        var radius = decimal.Parse(Console.ReadLine());
+            if (decimal.TryParse(input, out radius))
+                break;
+            Console.WriteLine("Invalid input. Please enter a valid number.");
+        }
 
         Console.WriteLine("The circle's area is "
                           + Geometry.AreaOfCircle(radius));
@@ -51,11 +69,26 @@ internal class Program
 
     public static void CalculateRectangleArea()
     {
-        Console.WriteLine("Enter length? ");
-        var length = decimal.Parse(Console.ReadLine());
+        decimal length, width;
+        while (true)
+        {
+            Console.WriteLine("Enter length: ");
+            var lengthInput = Console.ReadLine();
 
-        Console.WriteLine("Enter width? ");
-        var width = decimal.Parse(Console.ReadLine());
+            if (decimal.TryParse(lengthInput, out length))
+                break;
+            Console.WriteLine("Invalid input. Please enter a valid number.");
+        }
+
+        while (true)
+        {
+            Console.WriteLine("Enter width: ");
+            var widthInput = Console.ReadLine();
+
+            if (decimal.TryParse(widthInput, out width))
+                break;
+            Console.WriteLine("Invalid input. Please enter a valid number.");
+        }
 
         Console.WriteLine("The rectangle's area is "
                           + Geometry.AreaOfRectangle(length, width));
@@ -63,11 +96,26 @@ internal class Program
 
     public static void CalculateTriangleArea()
     {
-        Console.WriteLine("Enter length of the triangle's base? ");
-        var ground = decimal.Parse(Console.ReadLine());
+        decimal ground, height;
+        while (true)
+        {
+            Console.WriteLine("Enter length of the triangle's base? ");
+            var groundInput = Console.ReadLine();
 
-        Console.WriteLine("Enter triangle's height? ");
-        var height = decimal.Parse(Console.ReadLine());
+            if (decimal.TryParse(groundInput, out ground))
+                break;
+            Console.WriteLine("Invalid input. Please enter a valid number.");
+        }
+
+        while (true)
+        {
+            Console.WriteLine("Enter triangle's height? ");
+            var heightInput = Console.ReadLine();
+
+            if (decimal.TryParse(heightInput, out height))
+                break;
+            Console.WriteLine("Invalid input. Please enter a valid number.");
+        }
 
         Console.WriteLine("The triangle's area is "
                           + Geometry.AreaOfTriangle(ground, height));
