@@ -24,7 +24,6 @@ internal class Program
             if (number == 6) day = "Saturday";
             if (number == 7) day = "Sunday";
         }
-
         else
         {
             return "Not a valid day";
