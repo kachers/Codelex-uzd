@@ -85,21 +85,18 @@ internal class Program
                 randomMove = "Rock";
                 break;
             }
-
             case 2:
             {
                 Console.WriteLine("Your opponent chose: Paper");
                 randomMove = "Paper";
                 break;
             }
-
             case 3:
             {
                 Console.WriteLine("Your opponent chose: Scissors");
                 randomMove = "Scissors";
                 break;
             }
-
             default:
             {
                 Console.WriteLine("Invalid input.");
