@@ -1,31 +1,31 @@
 ﻿using System;
 
-namespace EnergyDrinks
+namespace EnergyDrinks;
+
+internal class Program
 {
-    class Program
+    private const int NumberedSurveyed = 12467;
+    private const double PurchasedEnergyDrinks = 0.14;
+    private const double PreferCitrusDrinks = 0.64;
+    private static readonly double energyDrinkers = CalculateEnergyDrinkers(NumberedSurveyed);
+    private static readonly double preferCitrus = CalculatePreferCitrus(NumberedSurveyed);
+
+    private static void Main(string[] args)
     {
-        private const int NumberedSurveyed = 12467;
-        private const double PurchasedEnergyDrinks = 0.14;
-        private const double PreferCitrusDrinks = 0.64;
+        Console.WriteLine("Total number of people surveyed " + NumberedSurveyed);
+        Console.WriteLine("Approximately " + energyDrinkers + " bought at least one energy drink");
+        Console.WriteLine(preferCitrus + " of those " + "prefer citrus flavored energy drinks.");
+    }
 
-        private static void Main(string[] args)
-        {
-            //fixme
-            /*
-             Console.WriteLine("Total number of people surveyed " + NumberedSurveyed);
-             Console.WriteLine("Approximately " + energyDrinkers + " bought at least one energy drink");
-             Console.WriteLine(preferCitrus + " of those " + "prefer citrus flavored energy drinks.");
-             */
-        }
+    public static double CalculateEnergyDrinkers(int numberSurveyed)
+    {
+        var energyDrinkers = NumberedSurveyed * PurchasedEnergyDrinks;
+        return energyDrinkers;
+    }
 
-        double CalculateEnergyDrinkers(int numberSurveyed)
-        {
-            throw new Exception("Sorry, no code written :(");
-        }
-
-        double CalculatePreferCitrus(int numberSurveyed)
-        {
-            throw new Exception("Sorry, no code written :(");
-        }
+    public static double CalculatePreferCitrus(int numberSurveyed)
+    {
+        var preferCitrus = NumberedSurveyed * PreferCitrusDrinks;
+        return preferCitrus;
     }
 }
