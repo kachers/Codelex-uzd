@@ -1,21 +1,21 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
-namespace ListExercise7
+namespace ListExercise7;
+
+internal class Program
 {
-    class Program
+    private static void Main(string[] args)
     {
-        static void Main(string[] args)
+        var colors = new List<string>
         {
-            var colors = new List<string>
-            {
-                "Red",
-                "Green",
-                "Orange",
-                "White",
-                "Black"
-            };
+            "Red",
+            "Green",
+            "Orange",
+            "White",
+            "Black"
+        };
 
-            //      TODO: Check if list contains "White" element
-        }
+        Console.WriteLine(colors.Contains("White"));
     }
 }
