@@ -3,45 +3,47 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.0.31903.59
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Exercise1", "Exercise1\Exercise1.csproj", "{387BD104-0786-4B7B-AD53-FD01CD05D578}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Exercise1", "Exercise1\Exercise1.csproj", "{387BD104-0786-4B7B-AD53-FD01CD05D578}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FlightPlanner", "FlightPlanner\FlightPlanner.csproj", "{7617A60C-18A2-4FF5-9191-7137C7C2E8DA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FlightPlanner", "FlightPlanner\FlightPlanner.csproj", "{7617A60C-18A2-4FF5-9191-7137C7C2E8DA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Histogram", "Histogram\Histogram.csproj", "{5FB314A2-710C-4A70-80B8-2382B7B7D2CE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Histogram", "Histogram\Histogram.csproj", "{5FB314A2-710C-4A70-80B8-2382B7B7D2CE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Phonebook", "Phonebook\Phonebook.csproj", "{14C4C283-8C7A-4DB0-91BD-1DF9FD882E3A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Phonebook", "Phonebook\Phonebook.csproj", "{14C4C283-8C7A-4DB0-91BD-1DF9FD882E3A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WordCount", "WordCount\WordCount.csproj", "{CC44658B-6A21-41E5-89AB-3372C1B0F257}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WordCount", "WordCount\WordCount.csproj", "{CC44658B-6A21-41E5-89AB-3372C1B0F257}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Lists", "Lists", "{A6127B98-3FA0-4FE2-B8A3-55D9E639B1F6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ListExercise1", "ListExercise1\ListExercise1.csproj", "{50C26674-DB95-4BC8-A4F1-4F688F7AD0D4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ListExercise1", "ListExercise1\ListExercise1.csproj", "{50C26674-DB95-4BC8-A4F1-4F688F7AD0D4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ListExercise2", "ListExercise2\ListExercise2.csproj", "{7AF2C351-0EE3-4ED4-9FCA-B343FB5ADCE9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ListExercise2", "ListExercise2\ListExercise2.csproj", "{7AF2C351-0EE3-4ED4-9FCA-B343FB5ADCE9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ListExercise3", "ListExercise3\ListExercise3.csproj", "{AC998890-B24B-40F6-A98D-4CB114D7A562}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ListExercise3", "ListExercise3\ListExercise3.csproj", "{AC998890-B24B-40F6-A98D-4CB114D7A562}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ListExercise6", "ListExercise6\ListExercise6.csproj", "{24729576-5CCD-434C-A5CE-17DD340BF9CC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ListExercise6", "ListExercise6\ListExercise6.csproj", "{24729576-5CCD-434C-A5CE-17DD340BF9CC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ListExercise7", "ListExercise7\ListExercise7.csproj", "{4FEA24A6-BD4A-4E85-87DA-671F13DB64BA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ListExercise7", "ListExercise7\ListExercise7.csproj", "{4FEA24A6-BD4A-4E85-87DA-671F13DB64BA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ListExercise9", "ListExercise9\ListExercise9.csproj", "{61A4EA55-6663-430A-96E1-7C42F43BAB0E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ListExercise9", "ListExercise9\ListExercise9.csproj", "{61A4EA55-6663-430A-96E1-7C42F43BAB0E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ListExercise10", "ListExercise10\ListExercise10.csproj", "{A47A516D-BE38-4D49-AD43-30D6B3DE44AA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ListExercise10", "ListExercise10\ListExercise10.csproj", "{A47A516D-BE38-4D49-AD43-30D6B3DE44AA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ListExercise11", "ListExercise11\ListExercise11.csproj", "{88737D25-5F14-427D-AAC9-910094585997}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ListExercise11", "ListExercise11\ListExercise11.csproj", "{88737D25-5F14-427D-AAC9-910094585997}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Linq", "Linq", "{A112C9BA-10AD-4D4E-A7D8-C4F6753A6215}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DaysNames", "DaysNames\DaysNames.csproj", "{6F9D2B56-2257-40B9-AD37-49508E033757}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DaysNames", "DaysNames\DaysNames.csproj", "{6F9D2B56-2257-40B9-AD37-49508E033757}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NumbersFromRange", "NumbersFromRange\NumbersFromRange.csproj", "{C82B6E7E-DA20-43DE-922C-BF288660188E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NumbersFromRange", "NumbersFromRange\NumbersFromRange.csproj", "{C82B6E7E-DA20-43DE-922C-BF288660188E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DecryptNumber", "DecryptNumber\DecryptNumber.csproj", "{B332A2F2-F418-4FEA-A89E-8408EF27438D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DecryptNumber", "DecryptNumber\DecryptNumber.csproj", "{B332A2F2-F418-4FEA-A89E-8408EF27438D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ReplaceSubstring", "ReplaceSubstring\ReplaceSubstring.csproj", "{95866E02-CF89-4230-8939-D7E832804676}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ReplaceSubstring", "ReplaceSubstring\ReplaceSubstring.csproj", "{95866E02-CF89-4230-8939-D7E832804676}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UniqueValues", "UniqueValues\UniqueValues.csproj", "{0C3C99BF-7B23-4573-B285-2FAE43DA51FA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UniqueValues", "UniqueValues\UniqueValues.csproj", "{0C3C99BF-7B23-4573-B285-2FAE43DA51FA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Exercise4", "Exercise4\Exercise4.csproj", "{857FEA89-E4A1-4F92-B8D1-0755646E9768}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -121,6 +123,10 @@ Global
 		{0C3C99BF-7B23-4573-B285-2FAE43DA51FA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0C3C99BF-7B23-4573-B285-2FAE43DA51FA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0C3C99BF-7B23-4573-B285-2FAE43DA51FA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{857FEA89-E4A1-4F92-B8D1-0755646E9768}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{857FEA89-E4A1-4F92-B8D1-0755646E9768}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{857FEA89-E4A1-4F92-B8D1-0755646E9768}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{857FEA89-E4A1-4F92-B8D1-0755646E9768}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
