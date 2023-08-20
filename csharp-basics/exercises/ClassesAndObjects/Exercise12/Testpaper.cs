@@ -13,7 +13,4 @@ internal class Testpaper : ITestPaper
     public string[] MarkScheme { get; }
     public string PassMark { get; }
 
-    public void TakeTest(ITestPaper paper, string[] answers)
-    {
-    }
 }
