@@ -6,17 +6,17 @@ public class Account
 {
     public Account(string name, double balance)
     {
-        Name = name;
-        Balance = balance;
+        _name = name;
+        _balance = balance;
     }
 
-    protected string Name { get; }
-    protected double Balance { get; }
+    private readonly string _name;
+    private readonly double _balance;
 
     public static string ShowUserNameAndBalance(Account benben)
     {
-        var name = benben.Name;
-        var balance = benben.Balance;
+        var name = benben._name;
+        var balance = benben._balance;
         return balance < 0 ? $"{name}, -{Math.Abs(balance):C2}" : $"{name}, {balance:C2}";
     }
 }
