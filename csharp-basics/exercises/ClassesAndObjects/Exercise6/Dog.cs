@@ -2,24 +2,24 @@
 
 internal class Dog
 {
-    public Dog father;
-    public Dog mother;
-    public string name;
-    public string sex;
+    public Dog Father;
+    public Dog Mother;
+    public string Name;
+    public string Sex;
 
     public Dog(string name, string sex)
     {
-        this.name = name;
-        this.sex = sex;
+        Name = name;
+        Sex = sex;
     }
 
     public string FathersName()
     {
-        return father == null ? "Unknown" : father.name;
+        return Father == null ? "Unknown" : Father.Name;
     }
 
     public bool HasSameMotherAs(Dog otherDog)
     {
-        return mother == otherDog.mother ? true : false;
+        return Mother == otherDog.Mother;
     }
 }
