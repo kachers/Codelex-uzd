@@ -2,25 +2,25 @@
 
 internal class FuelGauge
 {
-    public int FuelAmount;
+    private int _fuelAmount;
 
     public FuelGauge()
     {
-        FuelAmount = 0;
+        _fuelAmount = 0;
     }
 
     public int GetFuelAmount()
     {
-        return FuelAmount;
+        return _fuelAmount;
     }
 
     public void FillUp(int amount)
     {
-        FuelAmount += amount;
+        _fuelAmount += amount;
     }
 
     public int BurnFuel()
     {
-        return FuelAmount--;
+        return _fuelAmount--;
     }
 }

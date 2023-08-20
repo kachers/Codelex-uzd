@@ -2,36 +2,36 @@
 
 internal class Odometer
 {
-    public int Counter;
-    public int CurrentMileage;
-    public FuelGauge FuelGauge;
+    private int _counter;
+    private int _currentMileage;
+    private readonly FuelGauge _fuelGauge;
 
     public Odometer(FuelGauge fuelGauge, int mileage)
     {
-        FuelGauge = fuelGauge;
-        CurrentMileage = mileage;
-        Counter = 0;
+        _fuelGauge = fuelGauge;
+        _currentMileage = mileage;
+        _counter = 0;
     }
 
     public int GetCurrentMileage()
     {
-        return CurrentMileage;
+        return _currentMileage;
     }
 
     public void IncrementMileage()
     {
-        if (CurrentMileage == 999999) CurrentMileage = 0;
-        CurrentMileage++;
-        Counter++;
+        if (_currentMileage == 999999) _currentMileage = 0;
+        _currentMileage++;
+        _counter++;
         DecrementFuel();
     }
 
     public void DecrementFuel()
     {
-        if (Counter == 10)
+        if (_counter == 10)
         {
-            FuelGauge.BurnFuel();
-            Counter = 0;
+            _fuelGauge.BurnFuel();
+            _counter = 0;
         }
     }
 }
