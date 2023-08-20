@@ -2,41 +2,41 @@
 
 internal class Movie
 {
-    public string rating;
-    private readonly string studio;
-    private readonly string title;
+    public string Rating;
+    private readonly string _studio;
+    private readonly string _title;
 
     public Movie(string title, string studio, string rating)
     {
-        this.title = title;
-        this.studio = studio;
-        this.rating = rating;
+        _title = title;
+        _studio = studio;
+        Rating = rating;
     }
 
     public Movie(string title, string studio)
     {
-        this.title = title;
-        this.studio = studio;
-        rating = "PG";
+        _title = title;
+        _studio = studio;
+        Rating = "PG";
     }
 
-    public static Movie[] GetPG(Movie[] movies)
+    public static Movie[] GetPg(Movie[] movies)
     {
-        return movies.Where(movie => movie.rating == "PG").ToArray();
+        return movies.Where(movie => movie.Rating == "PG").ToArray();
     }
 
     public string GetTitle()
     {
-        return title;
+        return _title;
     }
 
     public string GetStudio()
     {
-        return studio;
+        return _studio;
     }
 
     public string GetRating()
     {
-        return rating;
+        return Rating;
     }
 }
