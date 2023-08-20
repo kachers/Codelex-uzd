@@ -2,29 +2,29 @@
 
 internal class Product
 {
-    private int amount;
-    private string name;
-    private double price;
+    private int _amount;
+    private readonly string _name;
+    private double _price;
 
     public Product(string name, double priceAtStart, int amountAtStart)
     {
-        this.name = name;
-        this.price = priceAtStart;
-        this.amount = amountAtStart;
+        _name = name;
+        _price = priceAtStart;
+        _amount = amountAtStart;
     }
 
     public void PrintProduct()
     {
-        Console.WriteLine($"{name}, price {price} EUR, amount {amount} units");
+        Console.WriteLine($"{_name}, _price {_price} EUR, _amount {_amount} units");
     }
 
     public void ChangeAmount(int newAmount)
     {
-        amount = newAmount;
+        _amount = newAmount;
     }
 
     public void ChangePrice(double newPrice)
     {
-        price = newPrice;
+        _price = newPrice;
     }
 }
