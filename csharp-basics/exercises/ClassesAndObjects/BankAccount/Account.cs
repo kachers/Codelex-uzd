@@ -1,33 +1,22 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace BankAccount
+namespace BankAccount;
+
+public class Account
 {
-    internal class Account
+    public Account(string name, double balance)
     {
-        private string _name;
-        private double _balance;
+        Name = name;
+        Balance = balance;
+    }
 
-        public Account(string name, double balance)
-        {
-            _name = name;
-            _balance = balance;
-        }
+    protected string Name { get; }
+    protected double Balance { get; }
 
-        public string Name { get{return _name; } }
-        public double Balance { get { return _balance; } }
-
-        public string GetName()
-        {
-            return Name;
-        }
-
-        public double GetBalance()
-        {
-            return Balance;
-        } 
+    public static string ShowUserNameAndBalance(Account benben)
+    {
+        var name = benben.Name;
+        var balance = benben.Balance;
+        return balance < 0 ? $"{name}, -{Math.Abs(balance):C2}" : $"{name}, {balance:C2}";
     }
 }
