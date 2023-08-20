@@ -8,7 +8,6 @@ namespace VideoStore
     {
         private readonly List<Video> _inventory;
         
-
         public VideoStore()
         {
             _inventory = new List <Video>();

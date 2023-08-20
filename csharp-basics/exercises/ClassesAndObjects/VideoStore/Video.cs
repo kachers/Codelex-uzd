@@ -6,7 +6,6 @@ namespace VideoStore
 {
     internal class Video
     {
-
         private readonly List<double> _ratings;
 
         public Video(string title)
@@ -22,7 +21,7 @@ namespace VideoStore
 
         public void BeingCheckedOut()
         {
-            if (IsAvailable) IsAvailable = false;
+            IsAvailable = false;
         }
 
         public void BeingReturned()
