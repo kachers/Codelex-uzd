@@ -8,7 +8,7 @@ internal class Program
         var annualInterestRate = ReadDoubleInput("Enter the annual interest rate:");
         var monthsPassed = (int)ReadDoubleInput("How long has the account been opened?");
         var acc1 = new SavingsAccount(startingBalance);
-        acc1.annualInterestRate = annualInterestRate;
+        acc1.AnnualInterestRate = annualInterestRate;
 
         double totalDeposits = 0;
         double totalWithdrawals = 0;

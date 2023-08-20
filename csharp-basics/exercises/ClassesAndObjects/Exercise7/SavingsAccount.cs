@@ -2,38 +2,38 @@
 
 internal class SavingsAccount
 {
-    private double balance;
-    public double annualInterestRate;
+    private double _balance;
+    public double AnnualInterestRate;
 
     public SavingsAccount(double startBal)
     {
-        this.balance = startBal;
+        this._balance = startBal;
     }
 
     public void Withdraw(double amount)
     {
-        balance -= amount;
+        _balance -= amount;
     }
 
     public void Deposit(double amount)
     {
-        balance += amount;
+        _balance += amount;
     }
 
     public void AddMonthlyInterest()
     {
-        var monthlyInterestRate = balance * annualInterestRate / 12;
-        balance += monthlyInterestRate;
+        var monthlyInterestRate = _balance * AnnualInterestRate / 12;
+        _balance += monthlyInterestRate;
     }
 
     public double GetBalance()
     {
-        return balance;
+        return _balance;
     }
 
     public double GetMonthlyInterestAmount()
     {
-        var monthlyInterestRate = balance * annualInterestRate / 12;
+        var monthlyInterestRate = _balance * AnnualInterestRate / 12;
         return monthlyInterestRate;
     }
 }
