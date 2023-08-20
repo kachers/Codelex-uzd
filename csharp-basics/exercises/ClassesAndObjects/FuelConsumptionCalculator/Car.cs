@@ -2,33 +2,33 @@
 
 internal class Car
 {
-    public double EndKilometers;
-    public double Liters;
-    public double StartKilometers;
+    private double _endKilometers;
+    private double _liters;
+    private readonly double _startKilometers;
 
     public Car(double startOdo, double endingOdo, double liters)
     {
-        StartKilometers = startOdo;
-        EndKilometers = endingOdo;
-        Liters = liters;
+        _startKilometers = startOdo;
+        _endKilometers = endingOdo;
+        _liters = liters;
     }
 
     public Car(double startOdo)
     {
-        StartKilometers = startOdo;
-        EndKilometers = 0;
-        Liters = 0;
+        _startKilometers = startOdo;
+        _endKilometers = 0;
+        _liters = 0;
     }
 
     public void FillUp(int mileage, double litersFilled)
     {
-        Liters += litersFilled;
-        EndKilometers += mileage;
+        _liters += litersFilled;
+        _endKilometers += mileage;
     }
 
     public double CalculateConsumption()
     {
-        return Liters / (EndKilometers - StartKilometers) * 100;
+        return _liters / (_endKilometers - _startKilometers) * 100;
     }
 
     public bool IsGasHog()

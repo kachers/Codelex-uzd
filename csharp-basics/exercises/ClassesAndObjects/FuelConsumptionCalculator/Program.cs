@@ -55,11 +55,10 @@ internal class Program
 
     private static double ReadDoubleInput(string prompt)
     {
-        double value;
         while (true)
         {
             Console.Write(prompt);
-            if (double.TryParse(Console.ReadLine(), out value)) return value;
+            if (double.TryParse(Console.ReadLine(), out var value)) return value;
             Console.WriteLine("Invalid input. Please enter a valid number.");
         }
     }
