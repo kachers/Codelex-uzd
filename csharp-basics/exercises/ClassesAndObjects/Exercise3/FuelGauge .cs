@@ -1,6 +1,6 @@
 ﻿namespace Exercise3;
 
-public class FuelGauge
+internal class FuelGauge
 {
     public int FuelAmount;
 

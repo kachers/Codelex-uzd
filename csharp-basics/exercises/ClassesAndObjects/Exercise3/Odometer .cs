@@ -1,16 +1,16 @@
 ﻿namespace Exercise3;
 
-public class Odometer
+internal class Odometer
 {
-    public int counter;
+    public int Counter;
     public int CurrentMileage;
-    public FuelGauge fuelgauge;
+    public FuelGauge FuelGauge;
 
     public Odometer(FuelGauge fuelGauge, int mileage)
     {
-        fuelgauge = fuelGauge;
+        FuelGauge = fuelGauge;
         CurrentMileage = mileage;
-        counter = 0;
+        Counter = 0;
     }
 
     public int GetCurrentMileage()
@@ -22,16 +22,16 @@ public class Odometer
     {
         if (CurrentMileage == 999999) CurrentMileage = 0;
         CurrentMileage++;
-        counter++;
+        Counter++;
         DecrementFuel();
     }
 
     public void DecrementFuel()
     {
-        if (counter == 10)
+        if (Counter == 10)
         {
-            fuelgauge.BurnFuel();
-            counter = 0;
+            FuelGauge.BurnFuel();
+            Counter = 0;
         }
     }
 }
