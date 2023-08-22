@@ -30,10 +30,10 @@ internal class Program
                 if (userChoice == 'y' || userChoice == 'n') break;
                 Console.WriteLine("\nInvalid choice. Please enter y or n.");
             }
+
         } while (userChoice == 'y');
-        {
-            Console.WriteLine($"\nYou got {points} points.");
-            Console.WriteLine("Game Over");
-        }
+
+        Console.WriteLine($"\nYou got {points} points.");
+        Console.WriteLine("Game Over");
     }
 }
