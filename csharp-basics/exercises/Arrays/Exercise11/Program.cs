@@ -11,8 +11,12 @@ internal class Program
     {
         var textArr = text.Split(" ");
         for (var i = 0; i < textArr.Length; i++)
+        {
             if (textArr[i].Equals("Nemo"))
-                return $"I found Nemo at {i + 1}!";
+            {
+                 return $"I found Nemo at {i + 1}!";
+            }
+        }
 
         return "I can't find Nemo :(";
     }
