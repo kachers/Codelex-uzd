@@ -13,10 +13,14 @@ namespace Exercise4
                 1456, 2265, 1457, 2456
             };
 
-            var number = 1245;
-            for(var i=0; i< myArray.Length; i++)
+            var number = 2456;
+            for (var i = 0; i < myArray.Length; i++)
             {
-                if (myArray[i] == number) Console.WriteLine("Contains!");
+                if (myArray[i] == number)
+                {
+                    Console.WriteLine("Contains!");
+                    break;
+                }
             }
         }
     }
