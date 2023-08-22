@@ -1,30 +1,30 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace AdApp
+namespace AdApp;
+
+public class Campaign
 {
-    public class Campaign
+    private readonly List<Advert> _campaign;
+
+    public Campaign()
     {
-        private List<Advert> _campaign;
+        _campaign = new List<Advert>();
+    }
 
-        public Campaign() 
-        {
-            _campaign = new List<Advert>();
-        }
+    public void AddAdvert(Advert a)
+    {
+        _campaign.Add(a);
+        a.AdType = a.GetType().Name;
+    }
 
-        public void AddAdvert(Advert a) 
-        {
-            _campaign.Add(a);
-        }
+    public int GetCost()
+    {
+        return _campaign.Sum(item => item.Cost());
+    }
 
-        public int GetCost()
-        {
-            return _campaign.Sum(item => item.Cost());
-        }
-
-        public override string ToString()
-        {
-            return "Advert Campaign" + _campaign + "\nTotal Cost = "+ GetCost();
-        }
+    public override string ToString()
+    {
+        return $"Advert Campaign {string.Join("", _campaign)} \nTotal Campaign Cost = {GetCost():C0}";
     }
 }
