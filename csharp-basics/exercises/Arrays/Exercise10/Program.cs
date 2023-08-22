@@ -12,8 +12,11 @@ internal class Program
         var posCount = 0;
         var negSum = 0;
         foreach (var i in pos)
+        {
             if (i > 0) posCount++;
             else negSum += i;
+        }
+            
 
         if (posCount > 0 || negSum > 0)
         {
