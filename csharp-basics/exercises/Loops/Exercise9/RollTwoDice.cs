@@ -17,6 +17,7 @@ namespace Exercise9
                 {
                     if (userNumber > 1 && userNumber < 13) break;
                 }
+
                 Console.WriteLine("Invalid input. Please enter a number from 2 to 12.");
             }
 
