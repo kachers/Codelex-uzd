@@ -18,6 +18,7 @@ namespace Exercise10
                 {
                     break;
                 }
+
                 Console.WriteLine("Invalid input. Please enter a number.");
             }
 
@@ -47,7 +48,6 @@ namespace Exercise10
                     Console.Write(numbers[j]);
                     if (numbers[j] == max) numbers[j] = min;
                     else numbers[j]++;
-                    
                 }
 
                 Console.WriteLine();
