@@ -1,12 +1,25 @@
-﻿namespace VendingMachine
+﻿using System;
+
+namespace VendingMachine
 {
     public struct Product
     {
-        ///<summary>Gets or sets the available amount of product.</summary>
+        public Product(string name, Money price,int available)
+        {
+            Name = name;
+            Available = available;
+            Price = price;
+        }
         public int Available { get; set; }
-        ///<summary>Gets or sets the product price.</summary>
+
         public Money Price { get; set; }
-        ///<summary>Gets or sets the product name.</summary>
+
         public string Name { get; set; }
+
+        public override string ToString()
+        {
+            double price = Price.Euros + ((double)Price.Cents / 100);
+            return string.Format("{0, -6}: {1, 1:C2}  Quant: {2, 1}", Name, price, Available);
+        }
     }
 }
