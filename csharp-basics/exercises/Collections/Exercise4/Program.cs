@@ -4,21 +4,17 @@ internal class Program
 {
     private static void Main(string[] args)
     {
-        List<string> names = new();
-        var userInput = string.Empty;
+        HashSet<string> names = new();
 
         while (true)
         {
             Console.WriteLine("Enter name:");
-            userInput = Console.ReadLine();
+            var userInput = Console.ReadLine();
             if (string.IsNullOrWhiteSpace(userInput)) break;
 
             names.Add(userInput);
         }
 
-        List<string> filteredNames = new();
-        foreach (var name in names.Where(name => !filteredNames.Contains(name))) filteredNames.Add(name);
-
-        Console.WriteLine("Unique name list contains:" + string.Join(" ", filteredNames));
+        Console.WriteLine("Unique name list contains:" + string.Join(" ", names));
     }
 }
