@@ -1,15 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Runtime.InteropServices;
-using System.Threading.Tasks.Dataflow;
 
 namespace FlightPlanner
 {
     class Program
     {
-        private const string Path = "C:/Users/john/source/repos/Codelex-uzd/csharp-basics/exercises/Collections/FlightPlanner/flights.txt";
+        private const string Path = "../../../flights.txt";
 
         private static void Main(string[] args)
         {
@@ -117,19 +114,24 @@ namespace FlightPlanner
         public static List<string> FormatCityList(string Path)
         {
             List<string> cities = new();
-            List<string> filteredCities = new();
             var readText = File.ReadAllLines(Path);
 
             foreach (var s in readText)
             {
                 string[] cityArr = s.Split("->");
                 string[] cityArrTrimed = new string[cityArr.Length];
-                for (var i = 0; i < cityArr.Length; i++) { cityArrTrimed[i] = cityArr[i].Trim(); }
+
+                for (var i = 0; i < cityArr.Length; i++)
+                {
+                    cityArrTrimed[i] = cityArr[i].Trim();
+                }
+
                 cities.AddRange(cityArrTrimed);
             }
             
-            foreach (var city in cities.Where(name => !filteredCities.Contains(name))) filteredCities.Add(city);
-
+            var hashedCities = new HashSet<string>(cities);
+            List<string> filteredCities = new(hashedCities);
+            
             return filteredCities;
         }
     }
