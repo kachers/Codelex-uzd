@@ -3,8 +3,10 @@ using System.Collections.Generic;
 using System.Runtime.Serialization;
 
 namespace DaysNames
-{ class Program
-    { private static void Main(string[] args)
+{ 
+    class Program
+    { 
+        private static void Main(string[] args)
         {
             Console.WriteLine("Enter year ");
             int year = int.Parse(Console.ReadLine());
