@@ -8,15 +8,16 @@ public class Program
 {
     private static void Main(string[] args)
     {
-        var filePath = "C:/Users/john/source/repos/Codelex-uzd/csharp-basics/exercises/Collections/WordCount/lear.txt";
+        var filePath = "../../../lear.txt";
 
         if (File.Exists(filePath))
         {
             var lines = File.ReadAllLines(filePath);
             var lineCount = lines.Length;
-            var wordCount = lines
-                .SelectMany(line => line.Split(new[] { ' ', '\t' }, StringSplitOptions.RemoveEmptyEntries))
-                .Count(word => word.All(char.IsLetterOrDigit));
+            var wordCount = lines.SelectMany(line => line
+                    .Split(' ', '\''))
+                .Count(word => word.Length > 0);
+
             var charCount = lines.Sum(line => line.Length);
 
             Console.WriteLine($"Lines = {lineCount}");
