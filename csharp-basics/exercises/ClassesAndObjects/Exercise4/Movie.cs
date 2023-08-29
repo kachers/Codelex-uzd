@@ -2,7 +2,7 @@
 
 internal class Movie
 {
-    public string Rating;
+    private string _rating;
     private readonly string _studio;
     private readonly string _title;
 
@@ -10,19 +10,19 @@ internal class Movie
     {
         _title = title;
         _studio = studio;
-        Rating = rating;
+        _rating = rating;
     }
 
     public Movie(string title, string studio)
     {
         _title = title;
         _studio = studio;
-        Rating = "PG";
+        _rating = "PG";
     }
 
     public static Movie[] GetPg(Movie[] movies)
     {
-        return movies.Where(movie => movie.Rating == "PG").ToArray();
+        return movies.Where(movie => movie._rating == "PG").ToArray();
     }
 
     public string GetTitle()
@@ -37,6 +37,6 @@ internal class Movie
 
     public string GetRating()
     {
-        return Rating;
+        return _rating;
     }
 }

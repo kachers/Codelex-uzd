@@ -4,18 +4,18 @@ internal class Dog
 {
     public Dog Father;
     public Dog Mother;
-    public string Name;
-    public string Sex;
+    private string _name;
+    private string _sex;
 
     public Dog(string name, string sex)
     {
-        Name = name;
-        Sex = sex;
+        _name = name;
+        _sex = sex;
     }
 
     public string FathersName()
     {
-        return Father == null ? "Unknown" : Father.Name;
+        return Father == null ? "Unknown" : Father._name;
     }
 
     public bool HasSameMotherAs(Dog otherDog)

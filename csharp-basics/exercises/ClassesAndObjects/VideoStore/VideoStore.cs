@@ -18,31 +18,19 @@ namespace VideoStore
             _inventory.Add(new Video(title));
         }
 
-        public void CheckOut(string title)
+        public void CheckOut(Video video)
         {
-            foreach (var t in _inventory.Where(t => t.Title == title))
-            {
-                t.BeingCheckedOut();
-                break;
-            }
+            video.BeingCheckedOut();
         }
 
-        public void ReturnVideo(string title)
+        public void ReturnVideo(Video video)
         {
-            foreach (var t in _inventory.Where(t => t.Title == title))
-            {
-                t.BeingReturned();
-                break;
-            }
+            video.BeingReturned();
         }
 
-        public void ReceiveRating(string title, double rating)
+        public void ReceiveRating(Video video, double rating)
         {
-            foreach (var t in _inventory.Where(t => t.Title == title))
-            {
-                t.ReceiveRating(rating);
-                break;
-            }
+            video.ReceiveRating(rating);
         }
 
         public void ListAvailableVideos()
@@ -53,6 +41,11 @@ namespace VideoStore
                 Console.WriteLine(t);
             }
             Console.WriteLine();
+        }
+
+        public Video SelectVideo(string title)
+        {
+            return _inventory.Where(t => t.Title == title).FirstOrDefault();
         }
     }
 }

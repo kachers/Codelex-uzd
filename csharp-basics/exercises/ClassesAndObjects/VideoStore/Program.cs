@@ -92,20 +92,23 @@ internal class Program
     {
         Console.Write("\nProvide a movie title: ");
         var title = Console.ReadLine();
-        _videoStore.CheckOut(title);
+        var video = _videoStore.SelectVideo(title);
+        _videoStore.CheckOut(video);
     }
 
     private static void ReturnVideo()
     {
         Console.Write("\nProvide a movie title: ");
         var title = Console.ReadLine();
-        _videoStore.ReturnVideo(title);
+        var video = _videoStore.SelectVideo(title);
+        _videoStore.ReturnVideo(video);
     }
 
     private static void RateVideo()
     {
         Console.Write("\nProvide a movie title: ");
         var title = Console.ReadLine();
+        var video = _videoStore.SelectVideo(title);
         double rating;
         while (true)
         {
@@ -114,6 +117,6 @@ internal class Program
             Console.WriteLine("\nInvalid input. Please enter a valid number.");
         }
 
-        _videoStore.ReceiveRating(title, rating);
+        _videoStore.ReceiveRating(video, rating);
     }
 }
