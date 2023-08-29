@@ -24,9 +24,18 @@ public class PhoneDirectory
 
     public void PutNumber(string name, string number)
     {
-        if (name == null || number == null) throw new Exception("name and number cannot be null");
+        if (string.IsNullOrEmpty(name) || number == null)
+        {
+            throw new Exception("name and number cannot be null");
+        }
 
-        if (Find(name)) _data[name] = number;
-        else _data.Add(name, number);
+        if (Find(name))
+        {
+            _data[name] = number;
+        }
+        else
+        {
+            _data.Add(name, number);
+        }
     }
 }
