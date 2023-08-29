@@ -14,7 +14,7 @@ namespace ListExercise2
             colors.Add("White");
             colors.Add("Black");
 
-            for (int i=0;i<colors.Count;i++) 
+            for (var i = 0; i < colors.Count; i++) 
             {
                 Console.WriteLine(colors[i]);
             }
