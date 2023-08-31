@@ -1,15 +1,18 @@
 ﻿using System;
+using System.Collections.Generic;
 
-namespace ListExercise1
+namespace ListExercise1;
+
+internal class Program
 {
-    class Program
+    private static void Main(string[] args)
     {
-        private static void Main(string[] args)
-        {
-            //TODO: Write a C# program to create a new list, add some elements (string) and print out the collection.
-            //TODO: Add 5 colors to list
-
-            Console.WriteLine();
-        }
+        List<string> newList = new();
+        newList.Add("add");
+        string[] elements = { "add", "some", "elements" };
+        newList.AddRange(elements);
+        Console.WriteLine(string.Join(",", newList));
+        string[] colors = { "red", "black", "green", "blue", "white" };
+        newList.AddRange(colors);
     }
 }

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace ListExercise2
 {
@@ -6,8 +7,6 @@ namespace ListExercise2
     {
         private static void Main(string[] args)
         {
-            //TODO: Write a C# program to iterate through all elements in a list.
-
             var colors = new List<string>();
             colors.Add("Red");
             colors.Add("Green");
@@ -15,13 +14,10 @@ namespace ListExercise2
             colors.Add("White");
             colors.Add("Black");
 
-            /*
-            fixme
-            for (...) 
+            for (var i = 0; i < colors.Count; i++) 
             {
-              Console.WriteLine(element);
+                Console.WriteLine(colors[i]);
             }
-            */
         }
     }
 }
