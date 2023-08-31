@@ -24,7 +24,7 @@ public class PhoneDirectory
 
     public void PutNumber(string name, string number)
     {
-        if (string.IsNullOrEmpty(name) || number == null)
+        if (string.IsNullOrEmpty(name) || string.IsNullOrEmpty(number))
         {
             throw new Exception("name and number cannot be null");
         }
