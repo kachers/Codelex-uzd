@@ -67,7 +67,8 @@ namespace VendingMachine
                 Console.WriteLine($"You bought {chosenProduct.Name}");
 
                 var newAmount = chosenProduct.Available - 1;
-                machine.UpdateProduct(1, productName, chosenProduct.Price, newAmount);
+                var productNumber = Array.IndexOf(machine.Products, chosenProduct);
+                machine.UpdateProduct(productNumber, productName, chosenProduct.Price, newAmount);
                 var euros = machine.Amount.Euros;
                 var cents = machine.Amount.Cents;
                 Console.WriteLine(cents < 10 ? $"Returned: ${euros}.0{cents}" : $"Returned: ${euros}.{cents}");

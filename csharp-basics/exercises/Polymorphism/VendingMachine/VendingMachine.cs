@@ -62,33 +62,26 @@ namespace VendingMachine
 
         public bool UpdateProduct(int productNumber, string name, Money? price, int amount)
         {
-            for (var i = 0; i < _productList.Count; i++)
+            _productList[productNumber] = new Product
             {
-                if (_productList[i].Name.ToLower() == name)
-                {
-                    var productQuantityUpdate = _productList[i];
-                    _productList[i] = new Product
-                    {
-                        Name = productQuantityUpdate.Name, 
-                        Price = productQuantityUpdate.Price,
-                        Available =  amount
-                    };
+                Name = name,
+                Price = (Money)price,
+                Available = amount
+            };
 
-                    var productPrice = productQuantityUpdate.Price.Euros * 100 + productQuantityUpdate.Price.Cents;
-                    var totalBalance = Amount.Euros * 100 + Amount.Cents;
-                    int totalCentsLeft = totalBalance - productPrice;
-                    int euros;
+            var productPrice = _productList[productNumber].Price.Euros * 100 + _productList[productNumber].Price.Cents;
+            var totalBalance = Amount.Euros * 100 + Amount.Cents;
+            int totalCentsLeft = totalBalance - productPrice;
+            int euros;
 
-                    if (totalCentsLeft >= 100) euros = (int)Math.Floor((double)(totalCentsLeft /100));
-                    else euros = 0;
+            if (totalCentsLeft >= 100) euros = (int)Math.Floor((double)(totalCentsLeft / 100));
+            else euros = 0;
 
-                    _insertedMoney = new Money
-                    {
-                        Euros = Math.Abs(euros), 
-                        Cents = totalCentsLeft%100
-                    };
-                }
-            }
+            _insertedMoney = new Money
+            {
+                Euros = Math.Abs(euros),
+                Cents = totalCentsLeft % 100
+            };
 
             return true;
         }
