@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
+using System.Xml.Linq;
 
 namespace VendingMachine
 {
@@ -7,22 +9,26 @@ namespace VendingMachine
     {
         private static void Main(string[] args)
         {
-            var snickerPrice = new Money(1, 99);
-            var marsPrice = new Money(1, 95);
-            var twixPrice = new Money(1, 11);
-            var spritePrice = new Money(2, 50);
+            var snickerPrice = new Money
+                {Euros = 1, Cents = 99};
+            var marsPrice = new Money
+                {Euros = 1, Cents = 95};
+            var twixPrice = new Money
+                {Euros = 1, Cents = 11};
+            var spritePrice = new Money
+                {Euros = 2, Cents = 50};
 
-            var sniker = new Product("Sniker", snickerPrice, 1);
-            var mars = new Product("Mars", marsPrice, 1);
-            var twix = new Product("Twix", twixPrice, 1);
+            var sniker = new Product
+            { Name = "Sniker", Price = snickerPrice, Available = 1 };
+            var mars = new Product
+            { Name = "Mars", Price = marsPrice, Available = 1 };
+            var twix = new Product
+            { Name= "Twix", Price = twixPrice, Available = 1 };
 
             Product[] products = { sniker, mars, twix };
 
             var machine = new VendingMachine("Philips", products);
-
-
             machine.AddProduct("Sprite", spritePrice, 2);
-
             MainMenu(machine);
         }
 
@@ -36,7 +42,8 @@ namespace VendingMachine
             {
                 var id = $"#{random.Next(1000, 9999)}";
                 dictionary.Add(id, product);
-                Console.WriteLine($"{id} {product}");
+                var price = product.Price.Euros + ((double)product.Price.Cents / 100);
+                Console.WriteLine($"{id} {string.Format("{0, -6}: {1, 1:C2}  Quant: {2, 1}", product.Name, price, product.Available)}");
             }
 
             Console.WriteLine("\nEnter product ID (Format: #****)");
@@ -58,9 +65,13 @@ namespace VendingMachine
             else
             {
                 Console.WriteLine($"You bought {chosenProduct.Name}");
-                DeductMoney(machine, chosenProduct);
+
                 var newAmount = chosenProduct.Available - 1;
                 machine.UpdateProduct(1, productName, chosenProduct.Price, newAmount);
+                var euros = machine.Amount.Euros;
+                var cents = machine.Amount.Cents;
+                Console.WriteLine(cents < 10 ? $"Returned: ${euros}.0{cents}" : $"Returned: ${euros}.{cents}");
+                machine.ReturnMoney();
             }
         }
 
@@ -98,10 +109,8 @@ namespace VendingMachine
                         }
                         else
                         {
-                            var eurosReturned = machine.Amount.Euros;
-                            var centsReturned = machine.Amount.Cents;
+                            Console.WriteLine($"Returned ${machine.Amount.Euros}.{machine.Amount.Cents}");
                             machine.ReturnMoney();
-                            Console.WriteLine($"Returned ${eurosReturned}.{centsReturned}");
                         }
                         break;
                     case "0":
@@ -153,22 +162,10 @@ namespace VendingMachine
             var centsInserted = moneyReceived % 100;
             var eurosInserted = (moneyReceived - centsInserted) / 100;
 
-            Money moneyInserted = new(eurosInserted, centsInserted);
-            machine.InsertCoin(moneyInserted);
+            Money moneyInserted = new Money() { Euros = eurosInserted, Cents = centsInserted };
+
+        machine.InsertCoin(moneyInserted);
             return moneyInserted;
-        }
-
-        private static void DeductMoney(VendingMachine machine, Product product)
-        {
-            var productPrice = product.Price.Euros * 100 + product.Price.Cents;
-            var totalBalance = machine.Amount.Euros*100 + machine.Amount.Cents;
-            var totalCentsLeft = totalBalance - productPrice;
-            int euros;
-
-            if (totalCentsLeft >= 100) euros = totalCentsLeft - totalCentsLeft % 10;
-            else euros = 0;
-            
-            machine.Amount = new Money(Math.Abs(euros), totalCentsLeft);
         }
     }
 }

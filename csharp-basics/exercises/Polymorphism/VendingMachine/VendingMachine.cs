@@ -1,5 +1,5 @@
 ﻿using System;
-using System.Linq;
+using System.Collections.Generic;
 
 namespace VendingMachine
 {
@@ -8,16 +8,18 @@ namespace VendingMachine
         public VendingMachine(string manufacturer, Product[] products)
         {
             Manufacturer = manufacturer;
-            Products = products;
+            _productList = new List<Product>(products);
+            _insertedMoney = new Money();
         }
 
-        public string Manufacturer { get; set; }
+        private readonly List<Product> _productList;
+        private Money _insertedMoney; 
+        public string Manufacturer { get; }
+        public bool HasProducts { get; }
 
-        public bool HasProducts { get; set; }
+        public Money Amount => _insertedMoney;
 
-        public Money Amount { get; set; }
-
-        public Product[] Products { get; set; }
+        public Product[] Products => _productList.ToArray();
 
         public bool AddProduct(string name, Money price, int count)
         {
@@ -28,40 +30,63 @@ namespace VendingMachine
                 Available = count
             };
 
-            Products = Products.Concat(new[] { newProduct }).ToArray();
+            _productList.Add(newProduct);
             return true;
         }
 
         public Money InsertCoin(Money amount)
         {
-            var euros = Amount.Euros+ amount.Euros;
-            var cents = Amount.Cents+ amount.Cents;
-            if (cents >= 100)
+            _insertedMoney.Euros += amount.Euros; 
+            _insertedMoney.Cents += amount.Cents;
+
+            if (_insertedMoney.Cents >= 100)
             {
-                euros += cents / 100;
-                cents %= 100;
+                _insertedMoney.Euros += _insertedMoney.Cents / 100;
+                _insertedMoney.Cents %= 100;
             }
 
-            Money newAmount = new(euros, cents);
-            Amount = newAmount;
-            return newAmount;
+            return new Money
+            {
+                Euros = _insertedMoney.Euros, 
+                Cents = _insertedMoney.Cents
+            }; 
         }
 
         public Money ReturnMoney()
         {
-            var centsLeft = Amount.Cents % 10;
-            var amountLeft = new Money(0, centsLeft);
-            Amount = amountLeft;
-            return amountLeft;
+            Money returnedAmount = Amount;
+            _insertedMoney = new Money();
+
+            return returnedAmount;
         }
 
         public bool UpdateProduct(int productNumber, string name, Money? price, int amount)
         {
-            for (var i = 0; i < Products.Length; i++)
+            for (var i = 0; i < _productList.Count; i++)
             {
-                if (Products[i].Name.ToLower() == name)
+                if (_productList[i].Name.ToLower() == name)
                 {
-                    Products[i].Available = amount;
+                    var productQuantityUpdate = _productList[i];
+                    _productList[i] = new Product
+                    {
+                        Name = productQuantityUpdate.Name, 
+                        Price = productQuantityUpdate.Price,
+                        Available =  amount
+                    };
+
+                    var productPrice = productQuantityUpdate.Price.Euros * 100 + productQuantityUpdate.Price.Cents;
+                    var totalBalance = Amount.Euros * 100 + Amount.Cents;
+                    int totalCentsLeft = totalBalance - productPrice;
+                    int euros;
+
+                    if (totalCentsLeft >= 100) euros = (int)Math.Floor((double)(totalCentsLeft /100));
+                    else euros = 0;
+
+                    _insertedMoney = new Money
+                    {
+                        Euros = Math.Abs(euros), 
+                        Cents = totalCentsLeft%100
+                    };
                 }
             }
 
