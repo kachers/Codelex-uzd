@@ -16,6 +16,15 @@ public class RentalCompany : IRentalCompany
     public string Name { get; }
     public void StartRent(string id)
     {
+        if (string.IsNullOrEmpty(id))
+        {
+            throw new InvalidIdException();
+        }
+
+        if (_scooterService.GetScooterById(id) == null)
+        {
+            throw new ScooterIdDoesNotExistException();
+        }
         var scooter = _scooterService.GetScooterById(id);
         scooter.IsRented = true;
         _rentalRecordsService.StartRent(scooter.Id, DateTime.Now);
@@ -28,9 +37,7 @@ public class RentalCompany : IRentalCompany
         decimal rentalPrice = 0;
         var scooter = _scooterService.GetScooterById(id);
         var rentedScooter = _rentalRecordsService.StopRent(scooter.Id, DateTime.Now);
-
         var rentEndDate = rentedScooter.RentEnd ?? DateTime.MinValue;
-
         scooter.IsRented = false;
 
         Debug.Assert(rentedScooter != null, nameof(rentedScooter) + " != null");
@@ -54,9 +61,9 @@ public class RentalCompany : IRentalCompany
         {
             var rentDuration = rentEndDate.Date - rentedScooter.RentStart.Date;
             var durationInDays = rentDuration.Days - 1;
-            //var minutesUsedInFirstDay = minutesInOneDay - rentedScooter.RentStart.TimeOfDay.TotalMinutes;
-            var minutesUsedInFirstDay = (int)(rentEndDate - rentedScooter.RentStart).TotalMinutes;
-            var minutesUsedInLastDay = rentEndDate.TimeOfDay.TotalMinutes;
+            var minutesUsedInFirstDay = minutesInOneDay - rentedScooter.RentStart.TimeOfDay.TotalMinutes;
+            //var minutesUsedInFirstDay = (int)(rentEndDate - rentedScooter.RentStart).TotalMinutes;
+            var minutesUsedInLastDay = rentEndDate.TimeOfDay.TotalMinutes;//rentEndDate.TimeOfDay.TotalMinutes;
 
             if (minutesUsedInFirstDay * (double)scooter.PricePerMinute >= maxPricePerDay)
             {
@@ -64,7 +71,7 @@ public class RentalCompany : IRentalCompany
             }
             else
             {
-                for (var i = 0; i <= minutesUsedInFirstDay; i++)
+                for (var i = 0; i < minutesUsedInFirstDay; i++)
                 {
                     rentalPrice += scooter.PricePerMinute;
                 }
@@ -76,13 +83,13 @@ public class RentalCompany : IRentalCompany
             }
             else
             {
-                for (var i = 0; i <= minutesUsedInLastDay; i++)
+                for (var i = 0; i <= (int)minutesUsedInLastDay; i++)
                 {
                     rentalPrice += scooter.PricePerMinute;
                 }
             }
-
-            if (minutesInOneDay * scooter.PricePerMinute >= maxPricePerDay)
+            
+            if (durationInDays > 2 && minutesInOneDay * scooter.PricePerMinute >= maxPricePerDay)
             {
                 rentalPrice += durationInDays * maxPricePerDay;
             }
@@ -91,7 +98,6 @@ public class RentalCompany : IRentalCompany
                 rentalPrice += durationInDays * minutesInOneDay * scooter.PricePerMinute;
             }
         }
-
 
         return Math.Round(rentalPrice, 2);
     }
@@ -116,20 +122,29 @@ public class RentalCompany : IRentalCompany
 
         if (year.HasValue && !includeNotCompletedRentals)
         {
-            var incomeForFinishedRentals = rentedScooters
+            var yearMatchScooters = rentedScooters.Where(s => s.RentStart.Year == year).ToList();
+
+            var finishedScooters = yearMatchScooters.Where(s =>!_scooterService.GetScooterById(s.Id).IsRented).ToList();
+
+            var incomeForFinishedRentals = finishedScooters.Sum(s => EndRent(s.Id));
+
+            /*var incomeForFinishedRentals = rentedScooters
                 .Where(s => s.RentStart.Year == year && s.RentEnd.HasValue)
                 .Sum(s => EndRent(s.Id));
+            */
 
             return incomeForFinishedRentals;
         }
 
         if (!year.HasValue && includeNotCompletedRentals)
         {
-            var incomeForAllRental = rentedScooters.Where(s => !s.RentEnd.HasValue).Sum(s => EndRent(s.Id));
+            var incomeForAllRental = rentedScooters.Sum(s => EndRent(s.Id));
+
             return incomeForAllRental;
         }
 
-        
-        return rentedScooters.Where(s => s.RentEnd.HasValue).Sum(s => EndRent(s.Id));
+        var finishedScootersList = rentedScooters.Where(s => !_scooterService.GetScooterById(s.Id).IsRented).ToList();
+
+        return finishedScootersList.Sum(s => EndRent(s.Id)); ; //rentedScooters.Where(s => s.RentEnd.HasValue).Sum(s => EndRent(s.Id));
     }
 }

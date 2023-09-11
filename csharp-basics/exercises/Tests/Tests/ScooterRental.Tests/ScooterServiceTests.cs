@@ -98,6 +98,7 @@ namespace ScooterRental.Tests
             action.Should().Throw<ScooterIdDoesNotExistException>();
         }
 
+
         [TestMethod]
         public void RemoveScooter_RemoveScooterWhenScooterIsNotRentedOut_ScooterRemoved()
         {
@@ -107,6 +108,17 @@ namespace ScooterRental.Tests
             _scooterService.RemoveScooter(DEFAULT_SCOOTE_ID);
 
             _scooterStorage.Should().BeEmpty();
+        }
+
+        [TestMethod]
+        public void GetScooterById_GetScooterWithDefaultId_ReturnsScooterWithDefaultId()
+        {
+            _scooterService.AddScooter(DEFAULT_SCOOTE_ID, 1m);
+            _scooterStorage.First().IsRented = false;
+
+            var scooter =  _scooterService.GetScooterById(DEFAULT_SCOOTE_ID);
+
+            scooter.Id.Should().Be(DEFAULT_SCOOTE_ID);
         }
 
         [TestMethod]
