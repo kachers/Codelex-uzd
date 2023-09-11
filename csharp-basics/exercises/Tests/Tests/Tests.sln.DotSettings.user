@@ -1,0 +1,23 @@
+﻿<wpf:ResourceDictionary xml:space="preserve" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:s="clr-namespace:System;assembly=mscorlib" xmlns:ss="urn:shemas-jetbrains-com:settings-storage-xaml" xmlns:wpf="http://schemas.microsoft.com/winfx/2006/xaml/presentation">
+	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=2ea38097_002D5b2d_002D4221_002D95c4_002D84b817a0177e/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" IsActive="True" Name="Test" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
+  &lt;TestAncestor&gt;&#xD;
+    &lt;TestId&gt;MSTest::62113A6C-E710-48B1-9B68-0208E3BE9151::net6.0::ScooterRental.Tests.RentalCompanyTests.EndRent_ScooterRentEnded&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;MSTest::62113A6C-E710-48B1-9B68-0208E3BE9151::net6.0::ScooterRental.Tests.RentalCompanyTests.StartRent_ScooterRentStarted&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;MSTest::62113A6C-E710-48B1-9B68-0208E3BE9151::net6.0::ScooterRental.Tests.RentalCompanyTests.EndRent_RentEndInTheSameDateAndTotalRentalPriceWasHigherThanMaximumDailyPrice_ReturnsMaximumDailyPrice&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;MSTest::62113A6C-E710-48B1-9B68-0208E3BE9151::net6.0::ScooterRental.Tests.RentalCompanyTests.EndRent_RentEndInTheSameDateAndTotalRentalPriceWasLowerThanMaximumDailyPrice_ReturnsActualTotalRentalPrice&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;MSTest::62113A6C-E710-48B1-9B68-0208E3BE9151::net6.0::ScooterRental.Tests.RentalCompanyTests.CalculateIncome_YearHasValueIncludeNotCompletedRentalsTrue_&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;MSTest::62113A6C-E710-48B1-9B68-0208E3BE9151::net6.0::ScooterRental.Tests.RentalCompanyTests.EndRent_RentEndedInSameDateAndTotalRentalPriceWasHigherThanMaximumDailyPrice_ReturnsMaximumDailyPrice&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;MSTest::62113A6C-E710-48B1-9B68-0208E3BE9151::net6.0::ScooterRental.Tests.RentalCompanyTests.CalculateIncome_HasYearAndBoolIsTrueWithFinishedAndUnFinishedScooterRent&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;MSTest::62113A6C-E710-48B1-9B68-0208E3BE9151::net6.0::ScooterRental.Tests.RentalCompanyTests.CalculateIncome_HasYearAndBoolIsFalseWithFinishedAndUnFinishedScooterRent&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;MSTest::62113A6C-E710-48B1-9B68-0208E3BE9151::net6.0::ScooterRental.Tests.RentalCompanyTests.CalculateIncome_HasYearAndBoolIsTrueWithFinishedAndUnFinishedScooterRent_ReturnsSumOfBothScooterPrices&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;MSTest::62113A6C-E710-48B1-9B68-0208E3BE9151::net6.0::ScooterRental.Tests.RentalCompanyTests.CalculateIncome_WithoutYearAndBoolIsTrueWithFinishedAndUnFinishedScooterRentInDifferentYears_ReturnsSumOfBothScooterPrices&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;MSTest::62113A6C-E710-48B1-9B68-0208E3BE9151::net6.0::ScooterRental.Tests.RentalCompanyTests.CalculateIncome_YearIsSetAndBoolIsTrueWithFinishedAndUnFinishedScooterRentInDifferentYears_ReturnsSumOfUnFinishedScooterPrices&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;MSTest::62113A6C-E710-48B1-9B68-0208E3BE9151::net6.0::ScooterRental.Tests.RentalCompanyTests.CalculateIncome_WithoutYearAndBoolIsFalseWithFinishedAndUnFinishedScooterRentInDifferentYears_ReturnsSumOfFinishedScooterPrice&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;MSTest::62113A6C-E710-48B1-9B68-0208E3BE9151::net6.0::ScooterRental.Tests.RentalCompanyTests.lalaEndRent_RentEndedInSameDateAndTotalRentalPriceWasHigherThanMaximumDailyPrice_ReturnsMaximumDailyPrice&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;MSTest::62113A6C-E710-48B1-9B68-0208E3BE9151::net6.0::ScooterRental.Tests.RentalCompanyTests.CalculateIncome_YearIsSetAndBoolIsTrueWithFinishedAndUnFinishedScooterRent_ReturnsSumOfBothScooterPrices&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;MSTest::62113A6C-E710-48B1-9B68-0208E3BE9151::net6.0::ScooterRental.Tests.RentalCompanyTests.CalculateIncome_YearIsSetAndBoolIsFalseWithFinishedAndUnFinishedScooterRent_ReturnsFinishedScooterPrice&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;MSTest::62113A6C-E710-48B1-9B68-0208E3BE9151::net6.0::ScooterRental.Tests.RentalCompanyTests.CalculateIncome_YearIsSetAndBoolIsTrueWithFinishedAndUnFinishedScooterRentInDifferentYears_ReturnsUnFinishedScooterPrice&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;MSTest::62113A6C-E710-48B1-9B68-0208E3BE9151::net6.0::ScooterRental.Tests.RentalCompanyTests.C22alculateIncome_WithoutYearAndBoolIsFalseWithFinishedAndUnFinishedScooterRentInDifferentYears_ReturnsSumOfFinishedScooterPrice&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;MSTest::62113A6C-E710-48B1-9B68-0208E3BE9151::net6.0::ScooterRental.Tests.RentalCompanyTests.DDCalculateIncome_BoolIsTrueWithUnFinishedScooterRent_ReturnsUnFinishedScooterPrice&lt;/TestId&gt;&#xD;
+  &lt;/TestAncestor&gt;&#xD;
+&lt;/SessionState&gt;</s:String></wpf:ResourceDictionary>
