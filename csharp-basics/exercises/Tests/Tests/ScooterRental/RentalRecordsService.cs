@@ -11,30 +11,18 @@ public class RentalRecordsService : IRentalRecordsService
 
     public void StartRent(string id, DateTime rentStart)
     {
-        if (_rentedScooterList.Any(s => s.Id == id))
-        {
-            throw new ScooterAlreadyRentedOutException();
-        }
+        if (_rentedScooterList.Any(s => s.Id == id)) throw new ScooterAlreadyRentedOutException();
 
-        if (string.IsNullOrEmpty(id))
-        {
-            throw new InvalidIdException();
-        }
+        if (string.IsNullOrEmpty(id)) throw new InvalidIdException();
 
-        _rentedScooterList.Add(new RentedScooter(id, DateTime.Now));
+        _rentedScooterList.Add(new RentedScooter(id, rentStart));
     }
 
     public RentedScooter StopRent(string id, DateTime rentEnd)
     {
-        if (string.IsNullOrEmpty(id))
-        {
-            throw new InvalidIdException();
-        }
+        if (string.IsNullOrEmpty(id)) throw new InvalidIdException();
 
-        if (!_rentedScooterList.Any(s => s.Id == id))
-        {
-            throw new ScooterIdDoesNotExistException();
-        }
+        if (!_rentedScooterList.Any(s => s.Id == id)) throw new ScooterIdDoesNotExistException();
 
         var rentalRecord = _rentedScooterList
             .FirstOrDefault(s => s.Id == id && !s.RentEnd.HasValue);
@@ -52,15 +40,9 @@ public class RentalRecordsService : IRentalRecordsService
     {
         var scooter = _rentedScooterList.FirstOrDefault(s => s.Id == scooterId);
 
-        if (string.IsNullOrEmpty(scooterId))
-        {
-            throw new InvalidIdException();
-        }
+        if (string.IsNullOrEmpty(scooterId)) throw new InvalidIdException();
 
-        if (scooter == null)
-        {
-            throw new ScooterIdDoesNotExistException();
-        }
+        if (scooter == null) throw new ScooterIdDoesNotExistException();
 
         return scooter;
     }

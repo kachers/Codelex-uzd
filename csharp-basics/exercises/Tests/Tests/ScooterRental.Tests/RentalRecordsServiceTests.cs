@@ -70,6 +70,18 @@ public class RentalRecordsService_Tests
     }
 
     [TestMethod]
+    public void StopRent_StopRentWithDefaultId_ReturnsRentedScooterWithDefaultIdAndCorrectRentEndTime()
+    {
+        _rentedScooterList.Add(new RentedScooter(DEFAULT_SCOOTE_ID, DateTime.Now));
+
+        var rentEndTime = DateTime.Now;
+        var result = _rentalRecordsService.StopRent(DEFAULT_SCOOTE_ID, rentEndTime);
+
+        result.Id.Should().Be(DEFAULT_SCOOTE_ID);
+        result.RentEnd.Should().Be(rentEndTime);
+    }
+
+    [TestMethod]
     public void GetScooterById_GetScooterWithDefaultId_ReturnsScooterWithDefaultId()
     {
         _rentedScooterList.Add(new RentedScooter(DEFAULT_SCOOTE_ID, DateTime.Now));

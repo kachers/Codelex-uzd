@@ -1,5 +1,4 @@
 ﻿using System.Diagnostics;
-using System.Runtime.InteropServices.ComTypes;
 
 namespace ScooterRental;
 
@@ -16,15 +15,10 @@ public class RentalCompany : IRentalCompany
     public string Name { get; }
     public void StartRent(string id)
     {
-        if (string.IsNullOrEmpty(id))
-        {
-            throw new InvalidIdException();
-        }
+        if (string.IsNullOrEmpty(id)) throw new InvalidIdException();
 
-        if (_scooterService.GetScooterById(id) == null)
-        {
-            throw new ScooterIdDoesNotExistException();
-        }
+        if (_scooterService.GetScooterById(id) == null) throw new ScooterIdDoesNotExistException();
+
         var scooter = _scooterService.GetScooterById(id);
         scooter.IsRented = true;
         _rentalRecordsService.StartRent(scooter.Id, DateTime.Now);
@@ -32,8 +26,12 @@ public class RentalCompany : IRentalCompany
 
     public decimal EndRent(string id)
     {
+        if (string.IsNullOrEmpty(id)) throw new InvalidIdException();
+
+        if (_scooterService.GetScooterById(id) == null) throw new ScooterIdDoesNotExistException();
+        
         const int minutesInOneDay = 24 * 60;
-        const int dailyMax = 2000;
+        const int dailyMax = 20;
         decimal rentalPrice = 0;
         var scooter = _scooterService.GetScooterById(id);
         var minutePrice = (decimal)scooter.PricePerMinute;
@@ -88,11 +86,11 @@ public class RentalCompany : IRentalCompany
                 }
             }
             
-            if ((rentDuration.Days - 1) > 2 && minutesInOneDay * minutePrice >= dailyMax)
+            if (rentDuration.Days - 1 >= 1 && minutesInOneDay * minutePrice >= dailyMax)
             {
                 rentalPrice += (rentDuration.Days - 1) * dailyMax;
             }
-            else
+            else if (rentDuration.Days - 1 >= 1)
             {
                 rentalPrice += (rentDuration.Days - 1) * minutesInOneDay * minutePrice;
             }
@@ -104,11 +102,6 @@ public class RentalCompany : IRentalCompany
     public decimal CalculateIncome(int? year, bool includeNotCompletedRentals)
     {
         var rentedScooters = _rentalRecordsService.GetScooters();
-
-        if (rentedScooters == null)
-        {
-            throw new InvalidIdException();
-        }
 
         if (year.HasValue && includeNotCompletedRentals)
         {

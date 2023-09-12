@@ -1,354 +1,215 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using FluentAssertions;
+﻿using FluentAssertions;
 using Moq;
 using Moq.AutoMock;
-using static System.Collections.Specialized.BitVector32;
 
-namespace ScooterRental.Tests
+namespace ScooterRental.Tests;
+
+[TestClass]
+public class RentalCompanyTests
 {
-    [TestClass]
-    public class RentalCompanyTests
+    private AutoMocker _mocker;
+    private IRentalCompany _rentalCompany;
+    private string DEFAULT_COMPANY_NAME;
+    private string DEFAULT_ID;
+    private Scooter SCOOTER;
+    private Scooter SCOOTER2;
+    private RentedScooter RENTED_SCOOTER;
+    private DateTime RENT_START_TIME;
+    private IList<RentedScooter> RENTED_SCOOTERS_LIST;
+
+    [TestInitialize]
+    public void Setup()
     {
-        private IRentalCompany _rentalCompany;
-        private string DEFAULT_COMPANY_NAME;
-        private AutoMocker _mocker;
-
-        [TestInitialize]
-        public void Setup()
-        {
-            DEFAULT_COMPANY_NAME = "default";
-            _mocker = new AutoMocker();
-            var scooterServiceMock = _mocker.GetMock<IScooterService>();
-            var recordsServiceMock = _mocker.GetMock<IRentalRecordsService>();
-            _rentalCompany = new RentalCompany(
-                DEFAULT_COMPANY_NAME,
-                scooterServiceMock.Object,
-                recordsServiceMock.Object);
-        }
-
-        [TestMethod]
-        public void StartRent_ScooterRentStarted()
-        {
-            Scooter scooter = new("1", 0.1m);
-            _mocker.GetMock<IScooterService>()
-                .Setup(s => s.GetScooterById("1"))
-                .Returns(scooter);
-            
-            _rentalCompany.StartRent("1");
-
-            scooter.IsRented.Should().Be(true);
-            _mocker.GetMock<IRentalRecordsService>()
-                .Verify(r => 
-                    r.StartRent("1", It.IsAny<DateTime>()), Times.Once);
-        }
-
-        [TestMethod]
-        public void StartRent_StartRentWithEmptyId_ThrowsInvalidIdException()
-        {
-            Action action = () => _rentalCompany.StartRent("");
-
-            action.Should().Throw<InvalidIdException>();
-        }
-
-        [TestMethod]
-        public void StartRent_StartRentWithWrongId_ThrowsIdDoesNotExistException()
-        {
-            Scooter scooter = new("1", 0.1m);
-            _mocker.GetMock<IScooterService>()
-                .Setup(s => s.GetScooterById("1"))
-                .Returns(scooter);
-            
-            Action action = () => _rentalCompany.StartRent("Wrong_id");
-
-            action.Should().Throw<ScooterIdDoesNotExistException>();
-        }
-
-        [TestMethod]
-        public void EndRent_RentEndedInSameDateAndTotalRentalPriceWasHigherThanMaximumDailyPrice_ReturnsMaximumDailyPrice()
-        {
-            Scooter scooter = new("1", 3000m){IsRented = true};
-            RentedScooter rentedScooter = new("1", DateTime.Now.AddMinutes(-10)){RentEnd = DateTime.Now};
-            _mocker.GetMock<IScooterService>()
-                .Setup(s => s.GetScooterById("1"))
-                .Returns(scooter);
-
-            _mocker.GetMock<IRentalRecordsService>()
-                .Setup(r =>
-                    r.StopRent("1", It.IsAny<DateTime>())).Returns(rentedScooter);
-            
-            var result = _rentalCompany.EndRent("1");
-
-            result.Should().Be(2000);
-            scooter.IsRented.Should().BeFalse();
-        }
-
-        [TestMethod]
-        public void EndRent_RentEndInTheSameDateAndTotalRentalPriceWasLowerThanMaximumDailyPrice_ReturnsActualTotalRentalPrice()
-        {
-            Scooter scooter = new("1", 190m){IsRented = true};
-            RentedScooter rentedScooter = new("1", DateTime.Now.AddMinutes(-10)) { RentEnd = DateTime.Now };
-            _mocker.GetMock<IScooterService>()
-                .Setup(s => s.GetScooterById("1"))
-                .Returns(scooter);
-
-            _mocker.GetMock<IRentalRecordsService>()
-                .Setup(r =>
-                    r.StopRent("1", It.IsAny<DateTime>())).Returns(rentedScooter);
-
-            var result = _rentalCompany.EndRent("1");
-
-            result.Should().Be(1900);
-            scooter.IsRented.Should().BeFalse();
-        }
-
-        [TestMethod]
-        public void EndRent_RentEndedInDifferentDateAndTotalRentalPriceForEachDayWasHigherThanMaximumDailyPrice_ReturnsMaximumSumOfDailyMaxPriceForEachDay()
-        {
-            Scooter scooter = new("1", 300m){IsRented = true};
-            var rentStart = new DateTime(2020, 9, 12, 23, 50, 39);
-            var rentEnd = new DateTime(2020, 9, 13, 00, 10, 39);
-            RentedScooter rentedScooter = new("1", rentStart) { RentEnd = rentEnd };
-            _mocker.GetMock<IScooterService>()
-                .Setup(s => s.GetScooterById("1"))
-                .Returns(scooter);
-
-            _mocker.GetMock<IRentalRecordsService>()
-                .Setup(r =>
-                    r.StopRent("1", It.IsAny<DateTime>())).Returns(rentedScooter);
-
-            var result = _rentalCompany.EndRent("1");
-
-            result.Should().Be(4000);
-            scooter.IsRented.Should().BeFalse();
-        }
-
-        [TestMethod]
-        public void EndRent_RentEndedInDifferentDateAndTotalRentalPriceForEachDayWasLowerThanMaximumDailyPrice_ReturnsSumOfActualDailyPrices()
-        {
-            Scooter scooter = new("1", 150m) { IsRented = true };
-            var rentStart = new DateTime(2020, 9, 12, 23, 50, 1);
-            var rentEnd = new DateTime(2020, 9, 13, 00, 9, 1);
-            RentedScooter rentedScooter = new("1", rentStart) { RentEnd = rentEnd };
-            _mocker.GetMock<IScooterService>()
-                .Setup(s => s.GetScooterById("1"))
-                .Returns(scooter);
-
-            _mocker.GetMock<IRentalRecordsService>()
-                .Setup(r =>
-                    r.StopRent("1", It.IsAny<DateTime>())).Returns(rentedScooter);
-
-            var result = _rentalCompany.EndRent("1");
-
-            result.Should().Be(3000);
-            scooter.IsRented.Should().BeFalse();
-        }
-
-        [TestMethod]
-        public void CalculateIncome_YearIsSetAndBoolIsTrueWithFinishedAndUnFinishedScooterRent_ReturnsScooterPriceWithMatchingRentYear()
-        {
-            Scooter scooter = new("1", 150m){IsRented = false};
-            var rentStart = new DateTime(2020, 9, 12, 23, 50, 1);
-            var rentEnd = new DateTime(2020, 9, 13, 00, 9, 1);
-            RentedScooter finishedScooter = new("1", rentStart) { RentEnd = rentEnd };
-            _mocker.GetMock<IScooterService>()
-                .Setup(s => s.GetScooterById("1"))
-                .Returns(scooter);
-            _mocker.GetMock<IRentalRecordsService>()
-                .Setup(r =>
-                    r.StopRent("1", It.IsAny<DateTime>())).Returns(finishedScooter);
-
-            Scooter scooter2 = new("2", 200m){IsRented = true};
-            RentedScooter unFinishedScooter = new("2", DateTime.Now.AddMinutes(-10)) { RentEnd = DateTime.Now };
-            _mocker.GetMock<IScooterService>()
-                .Setup(s => s.GetScooterById("2"))
-                .Returns(scooter2);
-            _mocker.GetMock<IRentalRecordsService>()
-                .Setup(r =>
-                    r.StopRent("2", It.IsAny<DateTime>())).Returns(unFinishedScooter);
-
-            IList<RentedScooter> rentedScooters = new List<RentedScooter>() { finishedScooter, unFinishedScooter };
-            _mocker.GetMock<IRentalRecordsService>()
-                .Setup(r =>
-                    r.GetScooters()).Returns(rentedScooters);
-
-            var result = _rentalCompany.CalculateIncome(2020,true);
-
-            result.Should().Be(_rentalCompany.EndRent(finishedScooter.Id));
-        }
-
-        [TestMethod]
-        public void CalculateIncome_YearIsSetAndBoolIsFalseWithFinishedAndUnFinishedScooterRent_ReturnsFinishedScooterPrice()
-        {
-            Scooter scooter = new("1", 190m) { IsRented = false }; 
-            RentedScooter finishedScooter = new("1", DateTime.Now.AddMinutes(-10)) { RentEnd = DateTime.Now };
-            _mocker.GetMock<IScooterService>()
-                .Setup(s => s.GetScooterById("1"))
-                .Returns(scooter);
-            _mocker.GetMock<IRentalRecordsService>()
-                .Setup(r =>
-                    r.StopRent("1", It.IsAny<DateTime>())).Returns(finishedScooter);
-
-            Scooter scooter2 = new("2", 190m){IsRented = true};
-            RentedScooter unFinishedScooter = new("2", DateTime.Now.AddMinutes(-10)) { RentEnd = DateTime.Now };
-            _mocker.GetMock<IScooterService>()
-                .Setup(s => s.GetScooterById("2"))
-                .Returns(scooter2);
-            _mocker.GetMock<IRentalRecordsService>()
-                .Setup(r =>
-                    r.StopRent("2", It.IsAny<DateTime>())).Returns(unFinishedScooter);
-
-            IList<RentedScooter> rentedScooters = new List<RentedScooter>() { finishedScooter, unFinishedScooter };
-            _mocker.GetMock<IRentalRecordsService>()
-                .Setup(r =>
-                    r.GetScooters()).Returns(rentedScooters);
-
-            var result = _rentalCompany.CalculateIncome(2023, false);
-
-            result.Should().Be(_rentalCompany.EndRent(finishedScooter.Id));
-        }
-
-        [TestMethod]
-        public void CalculateIncome_YearIsSetAndBoolIsTrueWithFinishedAndUnFinishedScooterRentInDifferentYears_ReturnsUnFinishedScooterPriceMatchingYear()
-        {
-            Scooter scooter = new("1", 300m) { IsRented = false };
-            var rentEnd = new DateTime(2020, 9, 10, 18, 25, 39);
-            var rentStart = new DateTime(2020, 9, 10, 18, 15, 39);
-            RentedScooter finishedScooter = new("1", rentStart) { RentEnd = rentEnd };
-            _mocker.GetMock<IScooterService>()
-                .Setup(s => s.GetScooterById("1"))
-                .Returns(scooter);
-            _mocker.GetMock<IRentalRecordsService>()
-                .Setup(r =>
-                    r.StopRent("1", It.IsAny<DateTime>())).Returns(finishedScooter);
-
-            Scooter scooter2 = new("2", 200m) { IsRented = true };
-            RentedScooter unFinishedScooter = new("2", DateTime.Now.AddMinutes(-10)) { RentEnd = DateTime.Now };
-            _mocker.GetMock<IScooterService>()
-                .Setup(s => s.GetScooterById("2"))
-                .Returns(scooter2);
-            _mocker.GetMock<IRentalRecordsService>()
-                .Setup(r =>
-                    r.StopRent("2", It.IsAny<DateTime>())).Returns(unFinishedScooter);
-
-            IList<RentedScooter> rentedScooters = new List<RentedScooter>() { finishedScooter, unFinishedScooter };
-            _mocker.GetMock<IRentalRecordsService>()
-                .Setup(r =>
-                    r.GetScooters()).Returns(rentedScooters);
-
-            var result = _rentalCompany.CalculateIncome(2023,true);
-
-            result.Should().Be(_rentalCompany.EndRent(finishedScooter.Id));
-        }
-
-        [TestMethod]
-        public void CalculateIncome_YearIsNullAndBoolIsTrueWithUnFinishedScooterRent_ReturnsUnFinishedScooterPrice()
-        {
-
-            Scooter scooter = new("1", 300m){IsRented = true};
-            var rentStart = new DateTime(2020, 9, 10, 18, 15, 39);
-            var rentEnd = rentStart.AddDays(10);
-            RentedScooter unFinishedScooter = new("1", rentStart) { RentEnd = rentEnd }; 
-            _mocker.GetMock<IScooterService>()
-                .Setup(s => s.GetScooterById("1"))
-                .Returns(scooter);
-            _mocker.GetMock<IRentalRecordsService>()
-                .Setup(r =>
-                    r.StopRent("1", It.IsAny<DateTime>())).Returns(unFinishedScooter);
-
-            
-            IList<RentedScooter> rentedScooters = new List<RentedScooter>() { unFinishedScooter };
-            _mocker.GetMock<IRentalRecordsService>()
-                .Setup(r =>
-                    r.GetScooters()).Returns(rentedScooters);
-
-            var result = _rentalCompany.CalculateIncome(null, true);
-
-            result.Should().Be(_rentalCompany.EndRent(unFinishedScooter.Id));
-        }
-
-        [TestMethod]
-        public void CalculateIncome_YearIsSetAndBoolIsFalseWithUnFinishedScooterRent_ReturnsZero()
-        {
-
-            Scooter scooter = new("1", 300m) { IsRented = true };
-            var rentEnd = new DateTime(2020, 9, 10, 18, 25, 39);
-            var rentStart = new DateTime(2020, 9, 10, 18, 15, 39);
-            RentedScooter unFinishedScooter = new("1", rentStart) { RentEnd = rentEnd };
-            _mocker.GetMock<IScooterService>()
-                .Setup(s => s.GetScooterById("1"))
-                .Returns(scooter);
-            _mocker.GetMock<IRentalRecordsService>()
-                .Setup(r =>
-                    r.StopRent("1", It.IsAny<DateTime>())).Returns(unFinishedScooter);
-
-
-            IList<RentedScooter> rentedScooters = new List<RentedScooter>() { unFinishedScooter };
-            _mocker.GetMock<IRentalRecordsService>()
-                .Setup(r =>
-                    r.GetScooters()).Returns(rentedScooters);
-
-            var result = _rentalCompany.CalculateIncome(null, false);
-
-            result.Should().Be(0);
-        }
-
-        [TestMethod]
-        public void CalculateIncome_YearIsNullAndBoolIsFalseWithTwoFinishedScooterRentInDifferentYears_ReturnsSumOfFScooterPrices()
-        {
-
-            Scooter scooter = new("1", 300m) { IsRented = false };
-            var rentEnd = new DateTime(2020, 9, 10, 18, 25, 39);
-            var rentStart = new DateTime(2020, 9, 10, 18, 15, 39);
-            RentedScooter finishedScooter = new("1", rentStart) { RentEnd = rentEnd };
-            _mocker.GetMock<IScooterService>()
-                .Setup(s => s.GetScooterById("1"))
-                .Returns(scooter);
-            _mocker.GetMock<IRentalRecordsService>()
-                .Setup(r =>
-                    r.StopRent("1", It.IsAny<DateTime>())).Returns(finishedScooter);
-
-            Scooter scooter2 = new("2", 10m) { IsRented = false };
-            RentedScooter finishedScooter2 = new("2", DateTime.Now.AddMinutes(-10)) { RentEnd = DateTime.Now }; ;
-            _mocker.GetMock<IScooterService>()
-                .Setup(s => s.GetScooterById("2"))
-                .Returns(scooter2);
-            _mocker.GetMock<IRentalRecordsService>()
-                .Setup(r =>
-                    r.StopRent("2", It.IsAny<DateTime>())).Returns(finishedScooter2);
-
-            IList<RentedScooter> rentedScooters = new List<RentedScooter>() { finishedScooter, finishedScooter2 };
-            _mocker.GetMock<IRentalRecordsService>()
-                .Setup(r =>
-                    r.GetScooters()).Returns(rentedScooters);
-
-            var result = _rentalCompany.CalculateIncome(null,false);
-
-            result.Should().Be(_rentalCompany.EndRent(finishedScooter.Id) + _rentalCompany.EndRent(finishedScooter2.Id));
-        }
+        DEFAULT_COMPANY_NAME = "default";
+        DEFAULT_ID = "1";
+        SCOOTER = new Scooter(DEFAULT_ID, 0.5m) { IsRented = false }; ;
+        SCOOTER2 = new Scooter("2", 0.5m) { IsRented = true };
+        RENT_START_TIME = new DateTime(2023, 9, 10, 18, 15, 39);
+        RENTED_SCOOTER = new RentedScooter(DEFAULT_ID, RENT_START_TIME);
+        RENTED_SCOOTERS_LIST = new List<RentedScooter> { RENTED_SCOOTER };
+        _mocker = new AutoMocker();
+        var scooterServiceMock = _mocker.GetMock<IScooterService>();
+        var recordsServiceMock = _mocker.GetMock<IRentalRecordsService>();
         
-        /*
-        [TestMethod]
-        public void EndRent_RentEndInTheDifferentDateAndTotalRentalPriceWasLowerThanMaximumDailyPrice_ReturnsActualTotalRentalPrice()
-        {
-            Scooter scooter = new("1", 190m);
-            RentedScooter rentedScooter = new("1", DateTime.Now.AddMinutes(-10)) { RentEnd = DateTime.Now };
-            _mocker.GetMock<IScooterService>()
-                .Setup(s => s.GetScooterById("1"))
-                .Returns(scooter);
+        _rentalCompany = new RentalCompany(
+            DEFAULT_COMPANY_NAME,
+            scooterServiceMock.Object,
+            recordsServiceMock.Object);
 
-            _mocker.GetMock<IRentalRecordsService>()
-                .Setup(r =>
-                    r.StopRent("1", It.IsAny<DateTime>())).Returns(rentedScooter);
+        _mocker.GetMock<IScooterService>()
+            .Setup(s => s.GetScooterById(DEFAULT_ID))
+            .Returns(SCOOTER);
 
-            var result = _rentalCompany.EndRent("1");
+        _mocker.GetMock<IScooterService>()
+            .Setup(s => s.GetScooterById(SCOOTER2.Id))
+            .Returns(SCOOTER2);
 
-            result.Should().Be(1900);
-            scooter.IsRented.Should().BeFalse();
-        }
-        */
+        _mocker.GetMock<IRentalRecordsService>()
+            .Setup(r =>
+                r.StopRent(DEFAULT_ID, It.IsAny<DateTime>())).Returns(RENTED_SCOOTER);
+
+        _mocker.GetMock<IRentalRecordsService>()
+            .Setup(r =>
+                r.GetScooters()).Returns(RENTED_SCOOTERS_LIST);
+    }
+
+    [TestMethod]
+    public void StartRent_ScooterRentStarted()
+    {
+        _rentalCompany.StartRent(DEFAULT_ID);
+
+        SCOOTER.IsRented.Should().Be(true);
+        _mocker.GetMock<IRentalRecordsService>()
+            .Verify(r =>
+                r.StartRent(DEFAULT_ID, It.IsAny<DateTime>()), Times.Once);
+    }
+
+    [TestMethod]
+    public void StartRent_WithEmptyId_ThrowsInvalidIdException()
+    {
+        var action = () => _rentalCompany.StartRent(string.Empty);
+
+        action.Should().Throw<InvalidIdException>();
+    }
+
+    [TestMethod]
+    public void StartRent_WithWrongId_ThrowsIdDoesNotExistException()
+    {
+        var action = () => _rentalCompany.StartRent("Wrong_id");
+
+        action.Should().Throw<ScooterIdDoesNotExistException>();
+    }
+
+    [TestMethod]
+    public void EndRent_1minuteRent_ReturnsPricePerMinuteAndIsRentedSetToFalse()
+    {
+        RENTED_SCOOTER.RentEnd = RENT_START_TIME.AddMinutes(1);
+
+        var result = _rentalCompany.EndRent(DEFAULT_ID);
+
+        result.Should().Be(SCOOTER.PricePerMinute);
+        SCOOTER.IsRented.Should().BeFalse();
+    }
+
+    [TestMethod]
+    public void EndRent_WithTotalPriceAboveMaxPrice_ReturnsMaxPrice()
+    {
+        RENTED_SCOOTER.RentEnd = RENT_START_TIME.AddHours(1);
+       
+        var result = _rentalCompany.EndRent(DEFAULT_ID);
+
+        result.Should().Be(20);
+    }
+
+    [TestMethod]
+    public void EndRent_WithTotalPriceBelowMaxPrice_ReturnsActualPrice()
+    {
+        RENTED_SCOOTER.RentEnd = RENT_START_TIME.AddMinutes(10);
+
+        var result = _rentalCompany.EndRent(DEFAULT_ID);
+
+        result.Should().Be(5);
+    }
+
+    [TestMethod]
+    public void EndRent_MultipleDaysTotalPricePerEachDayHigherThanMaxPrice_ReturnsSumOfDailyMaxPrices()
+    {
+        RENTED_SCOOTER.RentEnd = RENT_START_TIME.AddDays(4);
+
+        var result = _rentalCompany.EndRent(DEFAULT_ID);
+
+        result.Should().Be(100m);
+    }
+
+    [TestMethod]
+    public void EndRent_MultipleDaysTotalPricePerEachDayLowerThanMaxPrice_ReturnsSumOfActualDailyPrices()
+    {
+        Scooter scooter = new(DEFAULT_ID, 0.01m) { IsRented = true };
+        RENTED_SCOOTER.RentEnd = RENT_START_TIME.AddDays(4).AddMinutes(39);
+
+        _mocker.GetMock<IScooterService>()
+            .Setup(s => s.GetScooterById(DEFAULT_ID))
+            .Returns(scooter);
+
+        var result = _rentalCompany.EndRent(DEFAULT_ID);
+
+        result.Should().Be(58);
+    }
+
+    [TestMethod]
+    public void EndRent_WithEmptyId_ThrowsInvalidIdException()
+    {
+        Action action = () => _rentalCompany.EndRent(string.Empty);
+
+        action.Should().Throw<InvalidIdException>();
+    }
+
+    [TestMethod]
+    public void EndRent_WithWrongId_ThrowsIdDoesNotExistException()
+    {
+        Action action = () => _rentalCompany.EndRent("Wrong_id");
+
+        action.Should().Throw<ScooterIdDoesNotExistException>();
+    }
+
+    [TestMethod]
+    public void CalculateIncome_YearIsSetAndBoolIsTrueWithFinishedAndUnFinishedRents_ReturnsSumOfBothRents()
+    {
+        RENTED_SCOOTER.RentEnd = RENT_START_TIME.AddMinutes(10);
+        RentedScooter unFinishedScooter = new("2", RENT_START_TIME.AddMinutes(-10)) { RentEnd = DateTime.Now };
+        _mocker.GetMock<IRentalRecordsService>()
+            .Setup(r =>
+                r.StopRent("2", It.IsAny<DateTime>())).Returns(unFinishedScooter);
+        RENTED_SCOOTERS_LIST.Add(unFinishedScooter);
+
+        var result = _rentalCompany.CalculateIncome(2023, true);
+
+        result.Should().Be(_rentalCompany.EndRent(DEFAULT_ID) + _rentalCompany.EndRent("2"));
+    }
+
+    [TestMethod]
+    public void CalculateIncome_YearIsNullAndBoolIsFalseWithFinishedAndUnFinishedRents_ReturnsSumOfFinishedRents()
+    {
+        RENTED_SCOOTER.RentEnd = RENT_START_TIME.AddMinutes(10);
+        RentedScooter unFinishedScooter = new("2", RENT_START_TIME.AddMinutes(-10)) { RentEnd = DateTime.Now };
+        _mocker.GetMock<IRentalRecordsService>()
+            .Setup(r =>
+                r.StopRent("2", It.IsAny<DateTime>())).Returns(unFinishedScooter);
+        RENTED_SCOOTERS_LIST.Add(unFinishedScooter);
+
+        var result = _rentalCompany.CalculateIncome(null, false);
+
+        result.Should().Be(_rentalCompany.EndRent(DEFAULT_ID));
+    }
+
+    [TestMethod]
+    public void
+        CalculateIncome_YearIsSetAndBoolIsFalseWithFinishedAndUnFinishedRents_ReturnsSumOfFinishedRentsMatchingYear()
+    {
+        RENTED_SCOOTER.RentEnd = RENT_START_TIME.AddMinutes(10);
+        RentedScooter unFinishedScooter = new("2", RENT_START_TIME) { RentEnd = DateTime.Now };
+        _mocker.GetMock<IRentalRecordsService>()
+            .Setup(r =>
+                r.StopRent("2", It.IsAny<DateTime>())).Returns(unFinishedScooter);
+        RENTED_SCOOTERS_LIST.Add(unFinishedScooter);
+
+        var result = _rentalCompany.CalculateIncome(2023, false);
+
+        result.Should().Be(_rentalCompany.EndRent(DEFAULT_ID));
+    }
+
+    [TestMethod]
+    public void CalculateIncome_YearIsNullAndBoolIsTrueWithFinishedAndUnFinishedRents_ReturnsSumOfAllRents()
+    {
+        RENTED_SCOOTER.RentEnd = RENT_START_TIME.AddMinutes(10);
+        RentedScooter unFinishedScooter = new("2", RENT_START_TIME.AddYears(-3)) { RentEnd = DateTime.Now };
+        _mocker.GetMock<IRentalRecordsService>()
+            .Setup(r =>
+                r.StopRent("2", It.IsAny<DateTime>())).Returns(unFinishedScooter);
+        RENTED_SCOOTERS_LIST.Add(unFinishedScooter);
+
+        var result = _rentalCompany.CalculateIncome(null, true);
+
+        result.Should().Be(_rentalCompany.EndRent(DEFAULT_ID) + _rentalCompany.EndRent("2"));
     }
 }

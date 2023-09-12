@@ -36,5 +36,25 @@
     &lt;TestId&gt;MSTest::235287BC-78A2-4EA8-94D3-C1BB94166132::net6.0::ScooterRental.Tests.RentalRecordsService_Tests.StopRent_StopRentWithEmptyId_ThrowsInvalidIdException&lt;/TestId&gt;&#xD;
     &lt;TestId&gt;MSTest::235287BC-78A2-4EA8-94D3-C1BB94166132::net6.0::ScooterRental.Tests.RentalRecordsService_Tests.StopRent_StopRentWithWrongId_ThrowsScooterIdDoesNotExistException&lt;/TestId&gt;&#xD;
     &lt;TestId&gt;MSTest::235287BC-78A2-4EA8-94D3-C1BB94166132::net6.0::ScooterRental.Tests.ScooterServiceTests.RemoveScooter_RemoveScooterWrongId_ThrowsScooterIdDoesNotExistException&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;MSTest::235287BC-78A2-4EA8-94D3-C1BB94166132::net6.0::ScooterRental.Tests.RentalRecordsService_Tests.StopRent_StopRentWithDefaultId_ReturnsRentedScooterWithDefaultIdAndCorrectRentEndTime&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;MSTest::235287BC-78A2-4EA8-94D3-C1BB94166132::net6.0::ScooterRental.Tests.RentalCompanyTests.EndRent_1minuteRent_ReturnsPricePerMinute&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;MSTest::235287BC-78A2-4EA8-94D3-C1BB94166132::net6.0::ScooterRental.Tests.RentalCompanyTests.EndRent_1hourRentWithTotalPriceAboveMaxPrice_ReturnsMaxPrice&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;MSTest::235287BC-78A2-4EA8-94D3-C1BB94166132::net6.0::ScooterRental.Tests.RentalCompanyTests.EndRent_1hourRentWithTotalPriceBelowMaxPrice_ReturnsActualPrice&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;MSTest::235287BC-78A2-4EA8-94D3-C1BB94166132::net6.0::ScooterRental.Tests.RentalCompanyTests.EndRent_RentWithTotalPriceBelowMaxPrice_ReturnsActualPrice&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;MSTest::235287BC-78A2-4EA8-94D3-C1BB94166132::net6.0::ScooterRental.Tests.RentalCompanyTests.EndRent_RentWithTotalPriceAboveMaxPrice_ReturnsMaxPrice&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;MSTest::235287BC-78A2-4EA8-94D3-C1BB94166132::net6.0::ScooterRental.Tests.RentalCompanyTests.EndRent_MultipleDaysTotalPricePerEachDayHigherThanMaxPrice_ReturnsSumOfDailyMaxPriceForEachDay&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;MSTest::235287BC-78A2-4EA8-94D3-C1BB94166132::net6.0::ScooterRental.Tests.RentalCompanyTests.EndRent_MultipleDaysTotalPricePerEachDayLowerThanMaxPrice_ReturnsSumOfActualDailyPrices&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;MSTest::235287BC-78A2-4EA8-94D3-C1BB94166132::net6.0::ScooterRental.Tests.RentalCompanyTests.CalculateIncome_YearIsSetAndBoolIsTrueWithFinishedAndUnFinishedRents_ReturnsScooterMatchingYearAndFinishedRent&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;MSTest::235287BC-78A2-4EA8-94D3-C1BB94166132::net6.0::ScooterRental.Tests.RentalCompanyTests.CalculateIncome_YearIsSetAndBoolIsTrueWithFinishedAndUnFinishedRents_ReturnsScooterRentsMatchingYear&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;MSTest::235287BC-78A2-4EA8-94D3-C1BB94166132::net6.0::ScooterRental.Tests.RentalCompanyTests.CalculateIncome_YearIsNullAndBoolIsFalseWithFinishedAndUnFinishedRents_ReturnsSumOfFinishedRents&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;MSTest::235287BC-78A2-4EA8-94D3-C1BB94166132::net6.0::ScooterRental.Tests.RentalCompanyTests.CalculateIncome_TFYearIsSetAndBoolIsFalseWithFinishedAndUnFinishedRents_ReturnsSumOfFinishedRentsMatchingYear&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;MSTest::235287BC-78A2-4EA8-94D3-C1BB94166132::net6.0::ScooterRental.Tests.RentalCompanyTests.CalculateIncome_FTYearIsNullAndBoolIsTrueWithFinishedAndUnFinishedRents_ReturnsSumOfAllRents&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;MSTest::235287BC-78A2-4EA8-94D3-C1BB94166132::net6.0::ScooterRental.Tests.RentalCompanyTests.StartRent_WithWrongId_ThrowsIdDoesNotExistException&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;MSTest::235287BC-78A2-4EA8-94D3-C1BB94166132::net6.0::ScooterRental.Tests.RentalCompanyTests.EndRent_1minuteRent_ReturnsPricePerMinuteAndIsRentedSetToFalse&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;MSTest::235287BC-78A2-4EA8-94D3-C1BB94166132::net6.0::ScooterRental.Tests.RentalCompanyTests.EndRent_WithTotalPriceAboveMaxPrice_ReturnsMaxPrice&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;MSTest::235287BC-78A2-4EA8-94D3-C1BB94166132::net6.0::ScooterRental.Tests.RentalCompanyTests.EndRent_WithTotalPriceBelowMaxPrice_ReturnsActualPrice&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;MSTest::235287BC-78A2-4EA8-94D3-C1BB94166132::net6.0::ScooterRental.Tests.RentalCompanyTests.EndRent_MultipleDaysTotalPricePerEachDayHigherThanMaxPrice_ReturnsSumOfDailyMaxPrices&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;MSTest::235287BC-78A2-4EA8-94D3-C1BB94166132::net6.0::ScooterRental.Tests.RentalCompanyTests.CalculateIncome_FFYearIsNullAndBoolIsFalseWithFinishedAndUnFinishedRents_ReturnsSumOfFinishedRents&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;MSTest::235287BC-78A2-4EA8-94D3-C1BB94166132::net6.0::ScooterRental.Tests.RentalCompanyTests.CalculateIncome_TTYearIsSetAndBoolIsTrueWithFinishedAndUnFinishedRents_ReturnsSumOfRentsMatchingYear&lt;/TestId&gt;&#xD;
   &lt;/TestAncestor&gt;&#xD;
 &lt;/SessionState&gt;</s:String></wpf:ResourceDictionary>
