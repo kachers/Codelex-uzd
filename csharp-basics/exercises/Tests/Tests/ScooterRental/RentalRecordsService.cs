@@ -11,11 +11,31 @@ public class RentalRecordsService : IRentalRecordsService
 
     public void StartRent(string id, DateTime rentStart)
     {
+        if (_rentedScooterList.Any(s => s.Id == id))
+        {
+            throw new ScooterAlreadyRentedOutException();
+        }
+
+        if (string.IsNullOrEmpty(id))
+        {
+            throw new InvalidIdException();
+        }
+
         _rentedScooterList.Add(new RentedScooter(id, DateTime.Now));
     }
 
     public RentedScooter StopRent(string id, DateTime rentEnd)
     {
+        if (string.IsNullOrEmpty(id))
+        {
+            throw new InvalidIdException();
+        }
+
+        if (!_rentedScooterList.Any(s => s.Id == id))
+        {
+            throw new ScooterIdDoesNotExistException();
+        }
+
         var rentalRecord = _rentedScooterList
             .FirstOrDefault(s => s.Id == id && !s.RentEnd.HasValue);
         rentalRecord.RentEnd = rentEnd;

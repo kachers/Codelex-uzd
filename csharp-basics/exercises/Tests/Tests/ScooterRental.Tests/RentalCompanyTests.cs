@@ -249,8 +249,8 @@ namespace ScooterRental.Tests
         {
 
             Scooter scooter = new("1", 300m){IsRented = true};
-            var rentEnd = new DateTime(2020, 9, 10, 18, 25, 39);
             var rentStart = new DateTime(2020, 9, 10, 18, 15, 39);
+            var rentEnd = rentStart.AddDays(10);
             RentedScooter unFinishedScooter = new("1", rentStart) { RentEnd = rentEnd }; 
             _mocker.GetMock<IScooterService>()
                 .Setup(s => s.GetScooterById("1"))

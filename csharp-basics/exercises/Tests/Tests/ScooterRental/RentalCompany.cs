@@ -114,7 +114,7 @@ public class RentalCompany : IRentalCompany
         {
             return rentedScooters
                 .Where(s => s.RentStart.Year == year)
-                .Sum(s => EndRent(s.Id)); ;
+                .Sum(s => EndRent(s.Id));
         }
 
         if (year.HasValue && !includeNotCompletedRentals)
@@ -122,7 +122,7 @@ public class RentalCompany : IRentalCompany
             return rentedScooters
                 .Where(s => s.RentStart.Year == year)
                 .Where(s => !_scooterService.GetScooterById(s.Id).IsRented)
-                .Sum(s => EndRent(s.Id)); ;
+                .Sum(s => EndRent(s.Id)); 
         }
 
         if (!year.HasValue && includeNotCompletedRentals)
@@ -132,6 +132,6 @@ public class RentalCompany : IRentalCompany
 
         return rentedScooters
             .Where(s => !_scooterService.GetScooterById(s.Id).IsRented)
-            .Sum(s => EndRent(s.Id)); //rentedScooters.Where(s => s.RentEnd.HasValue).Sum(s => EndRent(s.Id));
+            .Sum(s => EndRent(s.Id));
     }
 }

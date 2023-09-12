@@ -69,7 +69,7 @@ namespace ScooterRental.Tests
         public void RemoveScooter_RemoveScooterWhileScooterIsRentedOut_ThrowsCannotRemoveScooterWhileItIsRentedOutException()
         {
             _scooterService.AddScooter(DEFAULT_SCOOTE_ID, 1m);
-            _scooterStorage[0].IsRented = true;
+            _scooterStorage.First().IsRented = true;
 
             Action action = () => _scooterService.RemoveScooter(DEFAULT_SCOOTE_ID);
 
@@ -97,7 +97,6 @@ namespace ScooterRental.Tests
 
             action.Should().Throw<ScooterIdDoesNotExistException>();
         }
-
 
         [TestMethod]
         public void RemoveScooter_RemoveScooterWhenScooterIsNotRentedOut_ScooterRemoved()
@@ -144,14 +143,15 @@ namespace ScooterRental.Tests
         }
 
         [TestMethod]
-        public void GetScooterById_GetScooterWithDefaultId_ScooterWithDefaultIdReturned()
+        public void GetScooters_Returns()
         {
-            _scooterService.AddScooter(DEFAULT_SCOOTE_ID, 1m);
-            _scooterStorage.First().IsRented = false;
+            var scooter = new Scooter("S1", 1);
+            _scooterStorage.Add(scooter);
+            
+            var result=  _scooterService.GetScooters();
 
-            Scooter returnedScooter = _scooterService.GetScooterById(DEFAULT_SCOOTE_ID);
-
-            returnedScooter.Id.Should().Be(DEFAULT_SCOOTE_ID);
+            result.Count.Should().Be(1);
+            result.First().Should().Be(scooter);
         }
     }
 }

@@ -72,9 +72,4 @@ public class ScooterService : IScooterService
 
         _scooters.Remove(scooter);
     }
-
-    public static implicit operator List<object>(ScooterService v)
-    {
-        throw new NotImplementedException();
-    }
 }
