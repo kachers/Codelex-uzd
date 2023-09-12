@@ -33,9 +33,10 @@ public class RentalCompany : IRentalCompany
     public decimal EndRent(string id)
     {
         const int minutesInOneDay = 24 * 60;
-        const int maxPricePerDay = 2000;
+        const int dailyMax = 2000;
         decimal rentalPrice = 0;
         var scooter = _scooterService.GetScooterById(id);
+        var minutePrice = (decimal)scooter.PricePerMinute;
         var rentedScooter = _rentalRecordsService.StopRent(scooter.Id, DateTime.Now);
         var rentEndDate = rentedScooter.RentEnd ?? DateTime.MinValue;
         scooter.IsRented = false;
@@ -43,59 +44,57 @@ public class RentalCompany : IRentalCompany
         Debug.Assert(rentedScooter != null, nameof(rentedScooter) + " != null");
         if (rentEndDate.Date == rentedScooter.RentStart.Date)
         {
-            TimeSpan rentalDurationMinutes = (TimeSpan)(rentEndDate - rentedScooter.RentStart);
+            TimeSpan rentMinutes = (TimeSpan)(rentEndDate - rentedScooter.RentStart);
 
-            if ((int)rentalDurationMinutes.TotalMinutes * scooter.PricePerMinute >= maxPricePerDay)
+            if ((int)rentMinutes.TotalMinutes * minutePrice >= dailyMax)
             {
-                rentalPrice += maxPricePerDay;
+                rentalPrice += dailyMax;
             }
             else
             {
-                for (var i = 0; i < (int)rentalDurationMinutes.TotalMinutes; i++)
+                for (var i = 0; i < (int)rentMinutes.TotalMinutes; i++)
                 {
-                    rentalPrice += scooter.PricePerMinute;
+                    rentalPrice += minutePrice;
                 }
             }
         }
         else
         {
             var rentDuration = rentEndDate.Date - rentedScooter.RentStart.Date;
-            var durationInDays = rentDuration.Days - 1;
-            var minutesUsedInFirstDay = minutesInOneDay - rentedScooter.RentStart.TimeOfDay.TotalMinutes;
-            //var minutesUsedInFirstDay = (int)(rentEndDate - rentedScooter.RentStart).TotalMinutes;
-            var minutesUsedInLastDay = rentEndDate.TimeOfDay.TotalMinutes;//rentEndDate.TimeOfDay.TotalMinutes;
+            var minutesInFirstDay = (decimal)minutesInOneDay - (decimal)rentedScooter.RentStart.TimeOfDay.TotalMinutes;
+            var minutesInLastDay = (decimal)rentEndDate.TimeOfDay.TotalMinutes;
 
-            if (minutesUsedInFirstDay * (double)scooter.PricePerMinute >= maxPricePerDay)
+            if (minutesInFirstDay * minutePrice >= dailyMax)
             {
-                rentalPrice += maxPricePerDay;
+                rentalPrice += dailyMax;
             }
             else
             {
-                for (var i = 0; i < minutesUsedInFirstDay; i++)
+                for (var i = 0; i < minutesInFirstDay; i++)
                 {
-                    rentalPrice += scooter.PricePerMinute;
+                    rentalPrice += minutePrice;
                 }
             }
 
-            if (minutesUsedInLastDay * (double)scooter.PricePerMinute >= maxPricePerDay)
+            if (minutesInLastDay * minutePrice >= dailyMax)
             {
-                rentalPrice += maxPricePerDay;
+                rentalPrice += dailyMax;
             }
             else
             {
-                for (var i = 0; i <= (int)minutesUsedInLastDay; i++)
+                for (var i = 0; i <= (int)minutesInLastDay; i++)
                 {
-                    rentalPrice += scooter.PricePerMinute;
+                    rentalPrice += minutePrice;
                 }
             }
             
-            if (durationInDays > 2 && minutesInOneDay * scooter.PricePerMinute >= maxPricePerDay)
+            if ((rentDuration.Days - 1) > 2 && minutesInOneDay * minutePrice >= dailyMax)
             {
-                rentalPrice += durationInDays * maxPricePerDay;
+                rentalPrice += (rentDuration.Days - 1) * dailyMax;
             }
             else
             {
-                rentalPrice += durationInDays * minutesInOneDay * scooter.PricePerMinute;
+                rentalPrice += (rentDuration.Days - 1) * minutesInOneDay * minutePrice;
             }
         }
 
@@ -113,38 +112,26 @@ public class RentalCompany : IRentalCompany
 
         if (year.HasValue && includeNotCompletedRentals)
         {
-            var incomeForAllRentals = rentedScooters
+            return rentedScooters
                 .Where(s => s.RentStart.Year == year)
-                .Sum(s => EndRent(s.Id));
-
-            return incomeForAllRentals;
+                .Sum(s => EndRent(s.Id)); ;
         }
 
         if (year.HasValue && !includeNotCompletedRentals)
         {
-            var yearMatchScooters = rentedScooters.Where(s => s.RentStart.Year == year).ToList();
-
-            var finishedScooters = yearMatchScooters.Where(s =>!_scooterService.GetScooterById(s.Id).IsRented).ToList();
-
-            var incomeForFinishedRentals = finishedScooters.Sum(s => EndRent(s.Id));
-
-            /*var incomeForFinishedRentals = rentedScooters
-                .Where(s => s.RentStart.Year == year && s.RentEnd.HasValue)
-                .Sum(s => EndRent(s.Id));
-            */
-
-            return incomeForFinishedRentals;
+            return rentedScooters
+                .Where(s => s.RentStart.Year == year)
+                .Where(s => !_scooterService.GetScooterById(s.Id).IsRented)
+                .Sum(s => EndRent(s.Id)); ;
         }
 
         if (!year.HasValue && includeNotCompletedRentals)
         {
-            var incomeForAllRental = rentedScooters.Sum(s => EndRent(s.Id));
-
-            return incomeForAllRental;
+            return rentedScooters.Sum(s => EndRent(s.Id)); 
         }
 
-        var finishedScootersList = rentedScooters.Where(s => !_scooterService.GetScooterById(s.Id).IsRented).ToList();
-
-        return finishedScootersList.Sum(s => EndRent(s.Id)); ; //rentedScooters.Where(s => s.RentEnd.HasValue).Sum(s => EndRent(s.Id));
+        return rentedScooters
+            .Where(s => !_scooterService.GetScooterById(s.Id).IsRented)
+            .Sum(s => EndRent(s.Id)); //rentedScooters.Where(s => s.RentEnd.HasValue).Sum(s => EndRent(s.Id));
     }
 }
