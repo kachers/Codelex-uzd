@@ -183,8 +183,7 @@ public class RentalCompanyTests
     }
 
     [TestMethod]
-    public void
-        CalculateIncome_YearIsSetAndBoolIsFalseWithFinishedAndUnFinishedRents_ReturnsSumOfFinishedRentsMatchingYear()
+    public void CalculateIncome_YearIsSetAndBoolIsFalseWithFinishedAndUnFinishedRents_ReturnsSumOfFinishedRentsMatchingYear()
     {
         RENTED_SCOOTER.RentEnd = RENT_START_TIME.AddMinutes(10);
         RentedScooter unFinishedScooter = new("2", RENT_START_TIME) { RentEnd = DateTime.Now };

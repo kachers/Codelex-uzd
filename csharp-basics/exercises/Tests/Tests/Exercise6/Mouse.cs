@@ -1,29 +1,23 @@
 ﻿namespace Exercise6;
 
-internal class Mouse : Mammal
+public class Mouse : Mammal
 {
     public Mouse(string animalType, string animalName, double animalWeight, string livingRegion) : base(
         animalType, animalName, animalWeight, livingRegion)
     {
-
     }
 
-    public override void MakeSound()
+    public override string MakeSound()
     {
-        Console.WriteLine("Im am a mouse!");
+        return $"Im am a mouse!";
     }
 
     public override void EatFood(Food food)
     {
-        if (food is Vegetable vegetable)
-        {
-            FoodEaten += food.Quantity;
-            Console.WriteLine($"{vegetable.GetType().Name} {food.Quantity}");
-        }
-        else
-        {
-            Console.WriteLine($"Mice are not eating that type of food!");
-        }
+        if (food is not Vegetable vegetable) throw new WrongFoodException();
+
+        FoodEaten += food.Quantity;
+        Console.WriteLine($"{vegetable.GetType().Name} {food.Quantity}");
     }
     public override string ToString()
     {

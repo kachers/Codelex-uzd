@@ -1,6 +1,4 @@
 ﻿using ScooterRental;
-using System;
-using System.Linq;
 
 namespace Exercise7
 {
@@ -25,25 +23,15 @@ namespace Exercise7
 
         public bool AddProduct(string name, Money price, int count)
         {
-            if (string.IsNullOrEmpty(name))
-            {
-                throw new ProductNameCannotBeNullOrEmptyException();
-            }
-            var existingNames = Products.Where(p=>p.Name.Equals(name)).ToList();
-            if (existingNames.Count != 0)
-            {
-                throw new ProductNameAlreadyExistsException();
-            }
+            var existingNames = Products.Where(p => p.Name.Equals(name)).ToList();
 
-            if (price.Euros < 0 || price.Cents < 0)
-            {
-                throw new ProductPriceCannotBeNullOrNegativeException();
-            }
+            if (string.IsNullOrEmpty(name)) throw new ProductNameCannotBeNullOrEmptyException();
 
-            if (count < 0)
-            {
-                throw new ProductQuantityCannotBeNegativeException();
-            }
+            if (existingNames.Count != 0) throw new ProductNameAlreadyExistsException();
+
+            if (price.Euros < 0 || price.Cents < 0) throw new ProductPriceCannotBeNullOrNegativeException();
+
+            if (count < 0) throw new ProductQuantityCannotBeNegativeException();
 
             var newProduct = new Product
             {
@@ -58,10 +46,7 @@ namespace Exercise7
 
         public Money InsertCoin(Money amount)
         {
-            if (amount.Euros < 0 || amount.Cents < 0)
-            {
-                throw new NegativeMoneyValueException();
-            }
+            if (amount.Euros < 0 || amount.Cents < 0) throw new NegativeMoneyValueException();
 
             if (amount is { Euros: 2, Cents: 0 } or { Euros: 1, Cents: 0 } or { Euros: 0, Cents: 50 } or { Euros: 0, Cents: 20 } or { Euros: 0, Cents: 10 })
             {
@@ -86,10 +71,8 @@ namespace Exercise7
 
         public Money ReturnMoney()
         {
-            if (Amount.Euros == 0 && Amount.Cents == 0)
-            {
-                throw new NoCoinsInsertedException();
-            }
+            if (Amount.Euros == 0 && Amount.Cents == 0) throw new NoCoinsInsertedException();
+
             Money returnedAmount = Amount;
             _insertedMoney = new Money();
 
@@ -98,32 +81,17 @@ namespace Exercise7
 
         public bool UpdateProduct(int productNumber, string name, Money? price, int amount)
         {
-            if (productNumber < 0)
-            {
-                throw new ProductNumberCannotBeNegativeException();
-            }
+            if (productNumber < 0) throw new ProductNumberCannotBeNegativeException();
 
-            if (productNumber > Products.Length)
-            {
-                throw new ProductNumberOutOfRangeException();
-            }
+            if (productNumber > Products.Length) throw new ProductNumberOutOfRangeException();
 
-            if (string.IsNullOrEmpty(name))
-            {
-                throw new ProductNameCannotBeNullOrEmptyException();
-            }
+            if (string.IsNullOrEmpty(name)) throw new ProductNameCannotBeNullOrEmptyException();
 
-            if (amount < 0)
-            {
-                throw new AvailableCannotBeNegativeException();
-            }
+            if (amount < 0) throw new AvailableCannotBeNegativeException();
 
             if (price.HasValue)
             {
-                if (price.Value.Euros < 0 || price.Value.Cents < 0)
-                {
-                    throw new ProductPriceCannotBeNegativeException();
-                }
+                if (price.Value.Euros < 0 || price.Value.Cents < 0) throw new ProductPriceCannotBeNegativeException();
             }
 
             _productList[productNumber] = new Product

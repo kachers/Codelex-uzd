@@ -56,5 +56,14 @@
     &lt;TestId&gt;MSTest::235287BC-78A2-4EA8-94D3-C1BB94166132::net6.0::ScooterRental.Tests.RentalCompanyTests.EndRent_MultipleDaysTotalPricePerEachDayHigherThanMaxPrice_ReturnsSumOfDailyMaxPrices&lt;/TestId&gt;&#xD;
     &lt;TestId&gt;MSTest::235287BC-78A2-4EA8-94D3-C1BB94166132::net6.0::ScooterRental.Tests.RentalCompanyTests.CalculateIncome_FFYearIsNullAndBoolIsFalseWithFinishedAndUnFinishedRents_ReturnsSumOfFinishedRents&lt;/TestId&gt;&#xD;
     &lt;TestId&gt;MSTest::235287BC-78A2-4EA8-94D3-C1BB94166132::net6.0::ScooterRental.Tests.RentalCompanyTests.CalculateIncome_TTYearIsSetAndBoolIsTrueWithFinishedAndUnFinishedRents_ReturnsSumOfRentsMatchingYear&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;MSTest::235287BC-78A2-4EA8-94D3-C1BB94166132::net6.0::ScooterRental.Tests.RentalCompanyTests.EndRent_ArtjomsWithTotalPriceAboveMaxPrice_ReturnsMaxPrice&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;MSTest::AB6B0EC5-D425-4D2A-A69A-A08127919235::net6.0::Exercise6Tests.Tests.CatTest.EatFood_WithFood_FoodQuantityAdded&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;MSTest::AB6B0EC5-D425-4D2A-A69A-A08127919235::net6.0::Exercise6Tests.Tests.CatTest.Make_Sound_ReturnsString&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;MSTest::0351A469-B184-4F26-A888-F6FA73A4F9AD::net6.0::Exercise7.Tests.VendingMachineTests.InsertCoin_MoneyWithNegativeValueInserted_ThrowNegativeMoneyValueException&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;MSTest::0351A469-B184-4F26-A888-F6FA73A4F9AD::net6.0::Exercise7.Tests.VendingMachineTests.InsertCoin_MoneyWithWrongValueInserted_ReturnInsertedMoney&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;MSTest::0351A469-B184-4F26-A888-F6FA73A4F9AD::net6.0::Exercise7.Tests.VendingMachineTests.InsertCoin_ValidMoneyValueInserted_ReturnsMoneyWithZeroValues&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;MSTest::0351A469-B184-4F26-A888-F6FA73A4F9AD::net6.0::Exercise7.Tests.VendingMachineTests.InsertCoin_ValidMoneyValueInserted_AmountIncreasedByTheValueOfInsertedCoin&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;MSTest::0351A469-B184-4F26-A888-F6FA73A4F9AD::net6.0::Exercise7.Tests.VendingMachineTests.UpdateProduct_ProductNumberHigherThanProductCount_ThrowProductNumberOutOfRangeException&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;MSTest::0351A469-B184-4F26-A888-F6FA73A4F9AD::net6.0::Exercise7.Tests.VendingMachineTests.UpdateProduct_NegativeProductNumber_ThrowProductNumberCannotBeNegativeException&lt;/TestId&gt;&#xD;
   &lt;/TestAncestor&gt;&#xD;
 &lt;/SessionState&gt;</s:String></wpf:ResourceDictionary>

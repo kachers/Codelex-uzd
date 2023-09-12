@@ -15,11 +15,7 @@ public abstract class Animal
         FoodEaten = 0;
     }
 
-    public virtual void MakeSound()
-    {
-    }
+    public abstract string MakeSound();
 
-    public virtual void EatFood(Food food)
-    {
-    }
+    public abstract void EatFood(Food food);
 }

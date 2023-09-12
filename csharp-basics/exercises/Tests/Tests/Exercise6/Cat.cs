@@ -11,9 +11,9 @@ public class Cat : Mammal
         Breed = breed;
     }
 
-    public override void MakeSound()
+    public override string MakeSound()
     {
-        Console.WriteLine("Meowwww");
+        return $"Meowwww";
     }
 
     public override void EatFood(Food food)
