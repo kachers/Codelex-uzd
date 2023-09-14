@@ -1,11 +1,13 @@
-using System;
+﻿using System;
+using System.Collections.Generic;
+using System.Text;
 
 namespace MakeSounds
 {
-    public class Firework: ISound
+    internal class Radio:ISound
     {
         public string Sound;
-        public Firework(string sound)
+        public Radio(string sound)
         {
             Sound = sound;
         }

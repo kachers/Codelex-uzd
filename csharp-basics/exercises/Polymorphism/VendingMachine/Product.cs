@@ -1,4 +1,6 @@
-﻿namespace VendingMachine
+﻿using System;
+
+namespace VendingMachine
 {
     public struct Product
     {

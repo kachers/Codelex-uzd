@@ -1,24 +1,50 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 
-namespace DragRace
+namespace DragRace;
+
+internal class Program
 {
-    class Program
+    private static void Main(string[] args)
     {
-        /**
- * Take a look at the cars in this solution.
- * 1. Extract common behaviour to an interface called Car, and use it in the all classes.
- * Which methods will be extracted with an empty body, and which can be default?
- * 2. Create two more cars of your own choice.
- * 3. As you see there is a possibility to use some kind of boost in Lexus, extract it to a new interface
-          and add that behaviour in one more car.
- * 4. Create one instance of an each car and add them to list.
- * 5. Iterate over the list 10 times, in the 3rd iteration use speed boost on the car if they have one.
- * 6. Print out the car name and speed of the fastest car
- */
+        var lexus = new Lexus();
+        var bmw = new Bmw();
+        var tesla = new Tesla();
+        var audi = new Audi();
+        var mercedes = new Mercedes();
+        var opel = new Opel();
 
-        private static void Main(string[] args)
+        var cars = new List<Car>
         {
-            
-        }
+            lexus,
+            bmw,
+            tesla,
+            audi,
+            opel,
+            mercedes
+        };
+
+        for (var i = 1; i < 11; i++)
+            foreach (var car in cars)
+            {
+                if (i == 1) car.StartEngine();
+
+                if (i % 3 == 0 && car is IBoostable boostableCar)
+                {
+                    Console.WriteLine($"It's lap {i} {car.GetType().Name} is using Boost!");
+                    boostableCar.UseNitrousOxideEngine();
+                }
+
+                car.SpeedUp();
+            }
+
+        var winner = cars.First();
+        foreach (var car in cars)
+            if (int.Parse(car.ShowCurrentSpeed()) > int.Parse(winner.ShowCurrentSpeed()))
+                winner = car;
+
+        Console.WriteLine("Race finished, winner is:");
+        Console.WriteLine($"{winner.GetType().Name} {winner.ShowCurrentSpeed()}");
     }
 }

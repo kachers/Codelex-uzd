@@ -1,17 +1,17 @@
-using System;
+﻿using System;
 
 namespace DragRace;
 
-public class Audi : Car
+public class Mercedes : Car
 {
     public override void SpeedUp()
     {
-        CurrentSpeed += 8;
+        CurrentSpeed += 19;
     }
 
     public override void SlowDown()
     {
-        CurrentSpeed -= 5;
+        CurrentSpeed -= 10;
     }
 
     public override string ShowCurrentSpeed()
@@ -21,6 +21,6 @@ public class Audi : Car
 
     public override void StartEngine()
     {
-        Console.WriteLine("Rrrrrrr.....");
+        Console.WriteLine("brum brum");
     }
 }

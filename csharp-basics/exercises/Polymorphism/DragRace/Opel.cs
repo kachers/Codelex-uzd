@@ -1,17 +1,22 @@
-using System;
+﻿using System;
 
 namespace DragRace;
 
-public class Audi : Car
+public class Opel : Car, IBoostable
 {
+    public void UseNitrousOxideEngine()
+    {
+        CurrentSpeed += 13;
+    }
+
     public override void SpeedUp()
     {
-        CurrentSpeed += 8;
+        CurrentSpeed += 4;
     }
 
     public override void SlowDown()
     {
-        CurrentSpeed -= 5;
+        CurrentSpeed -= 4;
     }
 
     public override string ShowCurrentSpeed()
@@ -21,6 +26,6 @@ public class Audi : Car
 
     public override void StartEngine()
     {
-        Console.WriteLine("Rrrrrrr.....");
+        Console.WriteLine("Wrrrrummmm");
     }
 }
